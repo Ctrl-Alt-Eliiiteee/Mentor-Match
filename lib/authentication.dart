@@ -6,8 +6,12 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'advertisement.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 String select = "Mentee";
+final googleSignIn = GoogleSignIn();
 
 class Authentication extends StatefulWidget {
   @override
@@ -172,8 +176,31 @@ class _AuthenticationState extends State<Authentication> {
                                     ),
                                   ],
                                 )),
-                            onPressed: () {
-
+                            onPressed: () async {
+                              final user = await googleSignIn.signIn();
+                              if (user == null) {
+                                return;
+                              } else {
+                                final googleAuth = await user.authentication;
+                                final credential = GoogleAuthProvider.credential(
+                                  accessToken: googleAuth.accessToken,
+                                  idToken: googleAuth.idToken,
+                                );
+                                Fluttertoast.showToast(
+                                    msg: "Please Wait Signing In",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black54,
+                                    textColor: Colors.white,
+                                    fontSize: 13.0
+                                );
+                                await FirebaseAuth.instance.signInWithCredential(credential);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => LoggedInWidget()),
+                                );
+                              }
                             },
                           ),
                         ),
@@ -239,6 +266,52 @@ class _AuthenticationState extends State<Authentication> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class LoggedInWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
+    return Container(
+      alignment: Alignment.center,
+      color: Colors.blueGrey.shade900,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Logged In',
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(height: 8),
+          CircleAvatar(
+            maxRadius: 25,
+            //backgroundImage: NetworkImage(user.photoURL),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Name: ' + user.displayName,
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Email: ' + user.email,
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: () async {
+              await googleSignIn.disconnect();
+              FirebaseAuth.instance.signOut();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Authentication()));
+            },
+            child: Text('Logout'),
+          )
+        ],
       ),
     );
   }
