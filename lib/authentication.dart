@@ -18,13 +18,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 String select = "Mentee";
 final googleSignIn = GoogleSignIn();
 String email = '';
+String formFilled = 'No';
+
 class Authentication extends StatefulWidget {
   @override
   _AuthenticationState createState() => _AuthenticationState();
 }
 
 class _AuthenticationState extends State<Authentication> {
-  CollectionReference UserRefrence = FirebaseFirestore.instance.collection('MentorMentee');
+  CollectionReference userRefrence =
+      FirebaseFirestore.instance.collection('MentorMentee');
   String password = '';
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
   Future<String> _loginUser(LoginData data) {
@@ -32,6 +35,7 @@ class _AuthenticationState extends State<Authentication> {
       return null;
     });
   }
+
   Future<String> _recoverPassword(String name) {
     return Future.delayed(loginTime).then((_) {
       return null;
@@ -53,12 +57,14 @@ class _AuthenticationState extends State<Authentication> {
         body: Stack(
           children: [
             Container(
-              height: h/1.2,
+              height: h / 1.2,
               width: w,
               child: RotatedBox(
                 quarterTurns: 0,
                 child: FlareActor(
-                  select == "Mentee" ? 'images/auth yellow flare.flr' : 'images/auth blue flare.flr',
+                  select == "Mentee"
+                      ? 'images/auth yellow flare.flr'
+                      : 'images/auth blue flare.flr',
                   animation: 'Flow',
                   alignment: Alignment.bottomCenter,
                   fit: BoxFit.fill,
@@ -74,9 +80,9 @@ class _AuthenticationState extends State<Authentication> {
                   Text(
                     "Welcome ",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 36,
-                        fontFamily: 'Fredoka One',
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontFamily: 'Fredoka One',
                     ),
                   ),
                   Text(
@@ -91,95 +97,99 @@ class _AuthenticationState extends State<Authentication> {
               ),
             ),
             FlutterLogin(
-                title: "",
-                emailValidator: (value) {
-                  if (!value.contains('@') || !value.endsWith('.com')) {
-                    return "Email must contain '@' and end with '.com'";
-                  }
-                  return null;
-                },
-                passwordValidator: (value) {
-                  if (value.isEmpty) {
-                    return 'Password is empty';
-                  }
-                  return null;
-                },
-                onLogin: (loginData) async {
-                  email = loginData.name;
-                  password = loginData.password;
-                  try {
-                    UserCredential newUser = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: email,
-                        password: password);
-                     UserRefrence.doc(email.substring(0,email.indexOf('@')))
-                        .get()
-                        .then((DocumentSnapshot documentSnapshot) {
-                      if (documentSnapshot.exists) {
-                        var select1=documentSnapshot.data()['select'];
-                        print(select1);
-                        //  CircleAvtarImage=link.toString();
-                        if(select1==select&&select=='Mentor') {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => HomeMentor()));
-                        }
-                        else if(select1==select&&select=='Mentee'){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => HomeMentee()));
-                        }
-                        else{
-                          print('Correct the credentials');
-                        }
-
+              title: "",
+              emailValidator: (value) {
+                if (!value.contains('@') || !value.endsWith('.com')) {
+                  return "Email must contain '@' and end with '.com'";
+                }
+                return null;
+              },
+              passwordValidator: (value) {
+                if (value.isEmpty || value.length < 6) {
+                  return 'Password is empty';
+                }
+                return null;
+              },
+              onLogin: (loginData) async {
+                email = loginData.name;
+                password = loginData.password;
+                try {
+                  UserCredential newUser = await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: email, password: password);
+                  userRefrence
+                      .doc(email.substring(0, email.indexOf('@')))
+                      .get()
+                      .then((DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists) {
+                      var select1 = documentSnapshot.data()['select'];
+                      print(select1);
+                      //  CircleAvtarImage=link.toString();
+                      if (select1 == select && select == 'Mentor') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeMentor()));
+                      } else if (select1 == select && select == 'Mentee') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeMentee()));
+                      } else {
+                        print('Correct the credentials');
                       }
-                      else {
-                        print('unsucsessful');
-                      }});
-
-
-
-                  } catch (e) {
-                    print(e);
+                    } else {
+                      print('unsucsessful');
+                    }
+                  });
+                } catch (e) {
+                  print(e);
+                }
+                //add firebase code here
+                return _loginUser(loginData);
+              },
+              onSignup: (loginData) async {
+                email = loginData.name;
+                password = loginData.password;
+                //add firebase code here
+                try {
+                  final newUser = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: email, password: password);
+                  userRefrence
+                      .doc(email.substring(0, email.indexOf('@')))
+                      .set({
+                        'Email': email,
+                        'select': select,
+                        'formFilled': formFilled,
+                      })
+                      .then((value) => print('user Added'))
+                      .catchError((error) => print('Failed to add'));
+                  if (select == 'Mentor') {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => formMentor()));
+                  } else if (select == 'Mentee') {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => formMentee()));
+                  } else {
+                    print('Correct the credentials');
                   }
-                  //add firebase code here
-                  return _loginUser(loginData);
-                },
-                onSignup: (loginData) async {
-                  email = loginData.name;
-                  password = loginData.password;
-                  //add firebase code here
-                  try {
-                    final newUser = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        email: email,
-                        password: password);
-                    UserRefrence.doc(email.substring(0,email.indexOf('@'))).set({
-                      'Email': email,
-                      'select': select,
-                    }).then((value) => print('user Added'))
-                    .catchError((error)=>print('Failed to add'));
-                    if(select=='Mentor') {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => formMentor()));
-                    }
-                    else if(select=='Mentee'){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => formMentee()));
-                    }
-                    else{
-                      print('Correct the credentials');
-                    }
-
-                  } catch (e) {
-                    print(e);
-                  }
-                  return _loginUser(loginData);
-                },
-                onRecoverPassword: (email) {
-                  //reset pw of email
-                  return _recoverPassword(email);
-                },
+                } catch (e) {
+                  print(e);
+                }
+                return _loginUser(loginData);
+              },
+              onRecoverPassword: (email) {
+                //reset pw of email
+                return _recoverPassword(email);
+              },
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: .005*h, left: .30*w, right: .30*w, top: .93*h),
+              padding: EdgeInsets.only(
+                  bottom: .005 * h,
+                  left: .30 * w,
+                  right: .30 * w,
+                  top: .93 * h),
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: RaisedButton(
@@ -188,26 +198,33 @@ class _AuthenticationState extends State<Authentication> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(FlutterIcons.question_ant, color: Colors.black54, size: 20),
+                        Icon(FlutterIcons.question_ant,
+                            color: Colors.black54, size: 20),
                         Text(
-                            'Advertisement',
+                          'Advertisement',
                           style: TextStyle(color: Colors.black54),
                         ),
                       ],
                     ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => advertisementPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => advertisementPage()));
                     },
-                  )
-              ),
+                  )),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: .07*h, left: .24*w, right: .24*w, top: .865*h),
+              padding: EdgeInsets.only(
+                  bottom: .07 * h,
+                  left: .24 * w,
+                  right: .24 * w,
+                  top: .865 * h),
               child: Animator<double>(
                 tween: Tween<double>(begin: 300, end: 0),
                 cycles: 2,
                 duration: Duration(seconds: 2),
-                builder: (context, animatorState, child ) => Center(
+                builder: (context, animatorState, child) => Center(
                   child: Container(
                       height: animatorState.value,
                       width: animatorState.value,
@@ -217,34 +234,40 @@ class _AuthenticationState extends State<Authentication> {
                           padding: EdgeInsets.only(),
                           child: RaisedButton(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(18.0))),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(18.0))),
                             elevation: 5,
                             color: Colors.white,
                             child: Center(
                                 child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    Image(image: AssetImage('images/Google logo.webp'), width: .06*w, height: .04*h),
-                                    SizedBox(
-                                      width: .03*w,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text('Sign in with Google',
-                                          style: TextStyle(
-                                              color: Colors.black54,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15)),
-                                    ),
-                                  ],
-                                )),
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                Image(
+                                    image:
+                                        AssetImage('images/Google logo.webp'),
+                                    width: .06 * w,
+                                    height: .04 * h),
+                                SizedBox(
+                                  width: .03 * w,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text('Sign in with Google',
+                                      style: TextStyle(
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15)),
+                                ),
+                              ],
+                            )),
                             onPressed: () async {
                               final user = await googleSignIn.signIn();
                               if (user == null) {
                                 return;
                               } else {
                                 final googleAuth = await user.authentication;
-                                final credential = GoogleAuthProvider.credential(
+                                final credential =
+                                    GoogleAuthProvider.credential(
                                   accessToken: googleAuth.accessToken,
                                   idToken: googleAuth.idToken,
                                 );
@@ -255,70 +278,86 @@ class _AuthenticationState extends State<Authentication> {
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black54,
                                     textColor: Colors.white,
-                                    fontSize: 13.0
-                                );
-                                await FirebaseAuth.instance.signInWithCredential(credential);
+                                    fontSize: 13.0);
+                                await FirebaseAuth.instance
+                                    .signInWithCredential(credential);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => LoggedInWidget()),
+                                  MaterialPageRoute(
+                                      builder: (context) => LoggedInWidget()),
                                 );
                               }
                             },
                           ),
                         ),
-                      )
-                  ),
+                      )),
                 ),
               ),
             ),
             Align(
               alignment: Alignment.topRight,
               child: Padding(
-                padding: EdgeInsets.only(right: .1*w, top: .10*h),
+                padding: EdgeInsets.only(right: .1 * w, top: .10 * h),
                 child: Column(
                   children: [
-                    Text('Account', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: 'Fredoka One')),
-                    Text('Type', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: 'Fredoka One')),
+                    Text('Account',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Fredoka One')),
+                    Text('Type',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Fredoka One')),
                     SizedBox(
                       height: 15,
                     ),
                     RaisedButton(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(12.0))),
                       elevation: 0.5,
                       color: Colors.transparent,
                       child: Container(
-                        width: .225*w,
-                        height: .075*h,
+                        width: .225 * w,
+                        height: .075 * h,
                         child: Align(
-                          alignment: select=="Mentee" ? Alignment.centerRight : Alignment.centerLeft,
+                          alignment: select == "Mentee"
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
                           child: Container(
-                            width: .07*h,
-                            height: .1*w,
+                            width: .07 * h,
+                            height: .1 * w,
                             child: Center(
                               child: Text(
-                                  select,
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.black,
-                                    fontFamily: 'Fredoka One',
-                                  ),
+                                select,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.black,
+                                  fontFamily: 'Fredoka One',
+                                ),
                               ),
                             ),
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(12))
-                            ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
                           ),
                         ),
                       ),
                       onPressed: () {
                         setState(() {
-                          if(select=="Mentee")
-                            select="Mentor";
+                          if (select == "Mentee")
+                            select = "Mentor";
                           else
-                            select="Mentee";
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Authentication()));
+                            select = "Mentee";
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Authentication()));
                         });
                       },
                     ),
@@ -369,7 +408,8 @@ class LoggedInWidget extends StatelessWidget {
             onPressed: () async {
               await googleSignIn.disconnect();
               FirebaseAuth.instance.signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Authentication()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Authentication()));
             },
             child: Text('Logout'),
           )
