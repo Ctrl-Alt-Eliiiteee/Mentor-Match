@@ -1,9 +1,14 @@
 import 'package:animator/animator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:mentor_match_app/Mentee%20Package/formMentee.dart';
+import 'package:mentor_match_app/Mentor%20Package/formMentor.dart';
+import 'Mentee Package/HomeMentee.dart';
+import 'Mentor Package/HomeMentor.dart';
 import 'advertisement.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,15 +17,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 String select = "Mentee";
 final googleSignIn = GoogleSignIn();
-
+String email = '';
 class Authentication extends StatefulWidget {
   @override
   _AuthenticationState createState() => _AuthenticationState();
 }
 
 class _AuthenticationState extends State<Authentication> {
-
-  String email = '';
+  CollectionReference UserRefrence = FirebaseFirestore.instance.collection('MentorMentee');
   String password = '';
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
   Future<String> _loginUser(LoginData data) {
@@ -87,6 +91,7 @@ class _AuthenticationState extends State<Authentication> {
               ),
             ),
             FlutterLogin(
+                title: "",
                 emailValidator: (value) {
                   if (!value.contains('@') || !value.endsWith('.com')) {
                     return "Email must contain '@' and end with '.com'";
@@ -102,6 +107,39 @@ class _AuthenticationState extends State<Authentication> {
                 onLogin: (loginData) async {
                   email = loginData.name;
                   password = loginData.password;
+                  try {
+                    UserCredential newUser = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: email,
+                        password: password);
+                     UserRefrence.doc(email.substring(0,email.indexOf('@')))
+                        .get()
+                        .then((DocumentSnapshot documentSnapshot) {
+                      if (documentSnapshot.exists) {
+                        var select1=documentSnapshot.data()['select'];
+                        print(select1);
+                        //  CircleAvtarImage=link.toString();
+                        if(select1==select&&select=='Mentor') {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => HomeMentor()));
+                        }
+                        else if(select1==select&&select=='Mentee'){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => HomeMentee()));
+                        }
+                        else{
+                          print('Correct the credentials');
+                        }
+
+                      }
+                      else {
+                        print('unsucsessful');
+                      }});
+
+
+
+                  } catch (e) {
+                    print(e);
+                  }
                   //add firebase code here
                   return _loginUser(loginData);
                 },
@@ -109,6 +147,30 @@ class _AuthenticationState extends State<Authentication> {
                   email = loginData.name;
                   password = loginData.password;
                   //add firebase code here
+                  try {
+                    final newUser = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        email: email,
+                        password: password);
+                    UserRefrence.doc(email.substring(0,email.indexOf('@'))).set({
+                      'Email': email,
+                      'select': select,
+                    }).then((value) => print('user Added'))
+                    .catchError((error)=>print('Failed to add'));
+                    if(select=='Mentor') {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => formMentor()));
+                    }
+                    else if(select=='Mentee'){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => formMentee()));
+                    }
+                    else{
+                      print('Correct the credentials');
+                    }
+
+                  } catch (e) {
+                    print(e);
+                  }
                   return _loginUser(loginData);
                 },
                 onRecoverPassword: (email) {
