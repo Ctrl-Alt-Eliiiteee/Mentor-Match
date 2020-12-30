@@ -1,9 +1,9 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:delayed_display/delayed_display.dart';
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'advertisement.dart';
-import 'authentication.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:page_transition/page_transition.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,12 +16,114 @@ class MentorMatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AppIconSplash(),
+      home: movingRocket(),
     );
   }
 }
 
-class AppIconSplash extends StatefulWidget {
+// ignore: camel_case_types
+class movingRocket extends StatefulWidget {
+
+  @override
+  _movingRocketState createState() => _movingRocketState();
+}
+
+// ignore: camel_case_types
+class _movingRocketState extends State<movingRocket> {
+
+  final _controller = ScrollController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    Timer(
+      Duration(seconds: 2),
+          () => _controller.animateTo(
+          _controller.position.maxScrollExtent,
+          duration: Duration(seconds: 1),
+          curve: Curves.fastOutSlowIn
+      ),
+    );
+
+    Timer(
+      Duration(milliseconds: 2250),
+          () => Navigator.pushReplacement(context, PageTransition(
+          child: appSplash(),
+          duration: Duration(milliseconds: 625)
+      )),
+    );
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          ListView(
+            controller: _controller,
+            children: [
+              Container(
+                color: Colors.transparent,
+                height: MediaQuery.of(context).size.height*.4876,
+              ),
+              Stack(
+                children: [
+                  Container(
+                    color: Colors.transparent,
+                    height: MediaQuery.of(context).size.height,
+                  ),
+                  Image.asset(
+                    'images/rocket.png',
+                    fit: BoxFit.fitWidth,
+                  ),
+                ],
+              ),
+              Center(
+                child: Container(
+                  color: Color(0xff0072bb),
+                  height: MediaQuery.of(context).size.height*.4876,
+                ),
+              ),
+            ],
+          ),
+          Container(
+            color: Colors.transparent,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// ignore: camel_case_types
+class appSplash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    Timer(
+      Duration(milliseconds: 1500),
+          () => Navigator.pushReplacement(context, PageTransition(
+          child: advertisementPage(),
+          type: PageTransitionType.fade,
+          duration: Duration(milliseconds: 625)
+      )),
+    );
+
+    return Image.asset(
+      'images/mentor match splash screen.png',
+      fit: BoxFit.cover,
+    );
+  }
+}
+
+
+/*class AppIconSplash extends StatefulWidget {
   @override
   _AppIconSplashState createState() => _AppIconSplashState();
 }
@@ -74,3 +176,4 @@ class _AppIconSplashState extends State<AppIconSplash> {
     );
   }
 }
+*/

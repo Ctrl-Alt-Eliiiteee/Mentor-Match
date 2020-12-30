@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
 import 'authentication.dart';
 
 class advertisementPage extends StatefulWidget {
@@ -13,7 +12,12 @@ class _advertisementPageState extends State<advertisementPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
+    return Image.asset(
+      'images/adv_1.png',
+      fit: BoxFit.cover,
+    );
+
+    /*return Builder(
         builder: (context) => LiquidSwipe(
             pages: [
               Stack(
@@ -178,6 +182,6 @@ class _advertisementPageState extends State<advertisementPage> {
               ),
             ]
         )
-    );
+    );*/
   }
 }
