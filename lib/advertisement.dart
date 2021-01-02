@@ -86,8 +86,7 @@ class HomePage3 extends StatelessWidget {
   }
 }
 
-
-    /*return Builder(
+/*return Builder(
         builder: (context) => LiquidSwipe(
             pages: [
               Stack(
@@ -253,4 +252,3 @@ class HomePage3 extends StatelessWidget {
             ]
         )
     );*/
-

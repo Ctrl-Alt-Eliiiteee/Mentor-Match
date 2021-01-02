@@ -167,10 +167,10 @@ class _AuthenticationState extends State<Authentication> {
                       .catchError((error) => print('Failed to add'));
                   if (select == 'Mentor') {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => formMentor()));
+                        MaterialPageRoute(builder: (context) => MenteeForm()));
                   } else if (select == 'Mentee') {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => formMentee()));
+                        MaterialPageRoute(builder: (context) => MenteeForm()));
                   } else {
                     print('Correct the credentials');
                   }

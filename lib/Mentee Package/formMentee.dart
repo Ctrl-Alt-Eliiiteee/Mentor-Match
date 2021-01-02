@@ -1,877 +1,377 @@
 import 'package:flutter/material.dart';
-import 'package:mentor_match_app/database.dart';
+import 'package:circular_check_box/circular_check_box.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mentor_match_app/Login.dart';
+import 'package:page_transition/page_transition.dart';
 
-import '../authentication.dart';
-import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'HomeMentee.dart';
 
-String email;
-String name;
-String number;
-String school;
-String hobbies;
-String tvShow;
-String futureStream;
-String time = '__:__';
-String birthdate = 'dd-mm-yy';
-String gender;
-String board = ' ';
-String studyclass = ' ';
-String studySession;
-String sessionLength;
-
-class formMentee extends StatefulWidget {
+class MenteeForm extends StatefulWidget {
   @override
-  _formMenteeState createState() => _formMenteeState();
+  _MneteeFormState createState() => _MneteeFormState();
 }
 
-class _formMenteeState extends State<formMentee> {
+String menteeSessions;
+int page = 1;
+List<String> dropDownItems = ['label', '1 hour', '1.5 hours', '2 hours'];
+String select;
+String menteeSessionsLength = 'label';
+String menteeSchool;
+String menteeClass;
+String menteeBoard;
+String menteeTime;
+String menteeTvShow;
+String menteeAspiredCollege;
+
+class _MneteeFormState extends State<MenteeForm> {
+  CollectionReference userRefrence =
+      FirebaseFirestore.instance.collection('MentorMentee');
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: HexColor('#FFF116'),
-          body: AnimationLimiter(
-            child: ListView.builder(
-              itemCount: 1,
-              itemBuilder: (BuildContext context, int index) {
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 800),
-                  child: SlideAnimation(
-                    verticalOffset: 150.0,
-                    child: FlipAnimation(
-                      child: SignUpForm(),
-                    ),
-                  ),
-                );
-              },
+    return Scaffold(
+      body: Container(
+          padding: EdgeInsets.only(top: 50),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/Images/Snow_bg.jpg'),
+              fit: BoxFit.cover,
             ),
+          ),
+          child: IntroductionScreen(
+            done: Container(),
+            onDone: () {},
+            globalBackgroundColor: Colors.transparent,
+            pages: [
+              PageViewModel(
+                  title: '',
+                  bodyWidget: Align(
+                    alignment: Alignment.center,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height - 250,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width - 80,
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            color: Colors.white.withOpacity(0.97),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 30, right: 30),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20),
+                                customText('Where do you go to school? ', 18),
+                                SizedBox(height: 20),
+                                _textField(detailInfo: 1),
+                                SizedBox(height: 20),
+                                customText(
+                                    'Starting to sound like an aunty at a wedding but... which standard do you study in? ',
+                                    18),
+                                SizedBox(height: 20),
+                                _textField(detailInfo: 2),
+                                SizedBox(height: 20),
+                                customText(
+                                    'Let us know which board you study in', 18),
+                                SizedBox(height: 20),
+                                _textField(detailInfo: 3),
+                                SizedBox(height: 20),
+                                customText(
+                                    'How would you like your sessions? ', 18),
+                                Transform(
+                                  transform:
+                                      Matrix4.translationValues(-10, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      CircularCheckBox(
+                                        value: menteeSessions == 'In-Person'
+                                            ? true
+                                            : false,
+                                        onChanged: (bool x) {
+                                          setState(() {
+                                            x == true
+                                                ? menteeSessions = 'In-Person'
+                                                : menteeSessions = null;
+                                          });
+                                        },
+                                      ),
+                                      customText('In-Person', 18),
+                                    ],
+                                  ),
+                                ),
+                                Transform(
+                                  transform:
+                                      Matrix4.translationValues(-10, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      CircularCheckBox(
+                                        value: menteeSessions == 'Online'
+                                            ? true
+                                            : false,
+                                        onChanged: (bool x) {
+                                          setState(() {
+                                            x == true
+                                                ? menteeSessions = 'Online'
+                                                : menteeSessions = null;
+                                          });
+                                        },
+                                      ),
+                                      customText('Online', 18),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )),
+              PageViewModel(
+                  title: '',
+                  bodyWidget: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: MediaQuery.of(context).size.height - 250,
+                          ),
+                          child: SingleChildScrollView(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 80,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                color: Colors.white.withOpacity(0.97),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 30, right: 30),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 20),
+                                    customText(
+                                        'How long do you want your sessions?',
+                                        18),
+                                    SizedBox(height: 20),
+                                    Container(
+                                      height: 40,
+                                      padding:
+                                          EdgeInsets.only(left: 10, right: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30)),
+                                        color: Colors.yellow,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey[300],
+                                            offset: Offset(5.0, 5.0),
+                                            blurRadius: 5.0,
+                                            spreadRadius: 2,
+                                          ),
+                                        ],
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton(
+                                            value: menteeSessionsLength == null
+                                                ? 'label'
+                                                : menteeSessionsLength,
+                                            items: dropDownItems.map((item) {
+                                              return DropdownMenuItem(
+                                                child: new Text(item),
+                                                value: item,
+                                              );
+                                            }).toList(),
+                                            onChanged: ((value) {
+                                              setState(() {
+                                                menteeSessionsLength = value;
+                                              });
+                                            })),
+                                      ),
+                                    ),
+                                    SizedBox(height: 20),
+                                    customText(
+                                        'What time are you comfirtable with? ',
+                                        18),
+                                    SizedBox(height: 20),
+                                    _textField(detailInfo: 4),
+                                    SizedBox(height: 20),
+                                    customText(
+                                        'What\'s your favorite tv show? And no, we aren\'t asking you this just for fun... we genuinely want to know! ',
+                                        18),
+                                    SizedBox(height: 20),
+                                    _textField(detailInfo: 5),
+                                    SizedBox(height: 20),
+                                    customText(
+                                        'Which college or stream do you aspire to undertake after school?  ',
+                                        18),
+                                    SizedBox(height: 20),
+                                    _textField(detailInfo: 6),
+                                    SizedBox(height: 20),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      RaisedButton(
+                        elevation: 8,
+                        textColor: Colors.white,
+                        padding: EdgeInsets.all(0.0),
+                        shape: StadiumBorder(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25.0),
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Colors.blue[400],
+                                Colors.blue[700],
+                              ],
+                            ),
+                          ),
+                          child: Text(
+                            'Submit',
+                            style:
+                                TextStyle(fontSize: 20.0, letterSpacing: 1.5),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 70.0, vertical: 15.0),
+                        ),
+                        onPressed: () {
+                          if (menteeSchool == null ||
+                              menteeClass == null ||
+                              menteeBoard == null ||
+                              menteeSessions == null ||
+                              menteeSessionsLength == 'label' ||
+                              menteeTime == null ||
+                              menteeTvShow == null ||
+                              menteeAspiredCollege == null) {
+                            showAlertDialog(
+                                context, 'Please fill out all the details');
+                          } else {
+                            try {
+                              userRefrence
+                                  .doc(Email.substring(0, Email.indexOf('@')))
+                                  .update({
+                                    'School': menteeSchool,
+                                    'Class': menteeClass,
+                                    'Board': menteeBoard,
+                                    'Sessions': menteeSessions,
+                                    'Session Length': menteeSessionsLength,
+                                    'Session Time': menteeTime,
+                                    'Favorite TvShow': menteeTvShow,
+                                    'Aspired College': menteeAspiredCollege,
+                                    'formFilled': true,
+                                    'select': 'mentee',
+                                  })
+                                  .then((value) => Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 800),
+                                          child: HomeMentee())))
+                                  .catchError((error) => showAlertDialog(
+                                      context, 'Some error occured'));
+                            } catch (e) {
+                              showAlertDialog(context, e);
+                            }
+                          }
+                        },
+                      ),
+                    ],
+                  )),
+            ],
           )),
     );
   }
 }
 
-class SignUpForm extends StatefulWidget {
-  @override
-  final String uid;
-
-  const SignUpForm({Key key, this.uid}) : super(key: key);
-  _SignUpFormState createState() => _SignUpFormState();
+Widget customText(String message, double fontsize) {
+  return Text(message,
+      style: TextStyle(
+          fontSize: fontsize, color: Colors.black, fontFamily: 'Lato'));
 }
 
-class _SignUpFormState extends State<SignUpForm> {
-  @override
-  double sizeBetweenCards = 5;
-  DateTime _dateTime;
-  TimeOfDay studyTime;
-  String boardTemp;
-  String classTemp;
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          image: DecorationImage(
-            image: AssetImage(
-              'images/MentorMatch.png',
-            ),
-          ),
-        ),
-        width: MediaQuery.of(context).size.width - 20,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Mentee Registeration Form',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      SizedBox(height: 20),
-                      Text(
-                        'So, we get that 2020 has been absolutely crazy - Zoom is the new school, Houseparty is the new actual party and Netflix is the new movie theatre. We thought since things seem to be getting a cool upgrade during these times when the old stuff isn\'t available, why not just change the way we study too and make it something fun. And while you\'re having fun, also manage to get you all the skills you need to ace your academics. ',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              _textFields(context, 'Email', 'Your email address', 0),
-              SizedBox(height: sizeBetweenCards),
-              _textFields(context, 'What\'s your name', 'Your name', 1),
-              SizedBox(height: sizeBetweenCards),
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          'What\'s your zodiac si- just kidding! When\'s your birthday? ',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      FlatButton(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          minWidth: 40,
-                          child: Row(
-                            children: [
-                              Text(
-                                birthdate,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w400),
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Icon(Icons.date_range_outlined),
-                            ],
-                          ),
-                          onPressed: () {
-                            showDatePicker(
-                                    context: context,
-                                    initialDate: _dateTime == null
-                                        ? DateTime.now()
-                                        : _dateTime,
-                                    firstDate: DateTime(1900),
-                                    lastDate: DateTime.now())
-                                .then((date) {
-                              setState(() {
-                                _dateTime = date;
-                                birthdate = (_dateTime.day.toString() +
-                                    '-' +
-                                    _dateTime.month.toString() +
-                                    '-' +
-                                    _dateTime.year.toString() +
-                                    '');
-                              });
-                            });
-                          }),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: sizeBetweenCards),
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          'Gender ',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: gender == 'Male' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        gender = 'Male';
-                                      } else {
-                                        gender = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('Male',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: gender == 'Female' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        gender = 'Female';
-                                      } else {
-                                        gender = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('Female',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: gender == 'Other' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        gender = 'Other';
-                                      } else {
-                                        gender = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('Other',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: sizeBetweenCards),
-              _textFields(context, 'You have our number, do give us yours',
-                  'Your answer', 2),
-              SizedBox(height: sizeBetweenCards),
-              _textFields(
-                  context, 'Which School do you Study in?', 'Your answer', 3),
-              SizedBox(height: sizeBetweenCards),
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          'Which board do you study in? ',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: board == 'ICSE' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        board = 'ICSE';
-                                      } else {
-                                        board = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('ICSE',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: board == 'CBSE' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        board = 'CBSE';
-                                      } else {
-                                        board = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('CBSE',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: board == 'State board' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        board = 'State board';
-                                      } else {
-                                        board = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('State board',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value:
-                                      board == 'International Baccalaureate(IB)'
-                                          ? true
-                                          : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        board =
-                                            'International Baccalaureate(IB)';
-                                      } else {
-                                        board = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('International Baccalaureate(IB)',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          Row(
-                            children: [
-                              SizedBox(width: 17),
-                              Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: board == "Other" ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        board = "Other";
-                                      } else {
-                                        board = null;
-                                      }
-                                    });
-                                  }),
-                              Text('Other: ', style: TextStyle(fontSize: 20)),
-                              Container(
-                                  width: 200,
-                                  child: TextField(
-                                    onChanged: ((value) {
-                                      boardTemp = value;
-                                    }),
-                                  )),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: sizeBetweenCards),
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          'Starting to sound like an aunty at a wedding but... which standard do you study in?',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: studyclass == 'Class 9' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studyclass = 'Class 9';
-                                      } else {
-                                        studyclass = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('Class 9',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value:
-                                      studyclass == 'Class 10' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studyclass = 'Class 10';
-                                      } else {
-                                        studyclass = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('Class 10',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value:
-                                      studyclass == 'Class 11' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studyclass = 'Class 11';
-                                      } else {
-                                        studyclass = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('Class 11',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value:
-                                      studyclass == 'Class 12' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studyclass = 'Class 12';
-                                      } else {
-                                        studyclass = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('Class 12',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          Row(
-                            children: [
-                              SizedBox(width: 17),
-                              Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: studyclass == 'Other' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studyclass = 'Other';
-                                      } else {
-                                        studyclass = null;
-                                      }
-                                    });
-                                  }),
-                              Text('Other: ', style: TextStyle(fontSize: 20)),
-                              Container(
-                                  width: 200,
-                                  child: TextField(
-                                    onChanged: ((value) {
-                                      classTemp = value;
-                                    }),
-                                  )),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: sizeBetweenCards),
-              _textFields(
-                  context,
-                  'What are you passionate about a.k.a what are your hobbies?',
-                  'Your answer',
-                  4),
-              SizedBox(height: sizeBetweenCards),
-              _textFields(
-                  context,
-                  'What\'s your favorite tv show? And no, we aren\'t asking you this just for fun... we genuinely want to know! ',
-                  'Your answer',
-                  5),
-              SizedBox(height: sizeBetweenCards),
-              _textFields(
-                  context,
-                  'Which college or stream do you aspire to undertake after school?',
-                  'Your answer',
-                  6),
-              SizedBox(height: sizeBetweenCards),
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          'How many times a week would you like to take your study session? (Yep, you get to choose)  ',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: studySession ==
-                                          '3 times a week (12 sessions)'
-                                      ? true
-                                      : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studySession =
-                                            '3 times a week (12 sessions)';
-                                      } else {
-                                        studySession = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('3 times a week (12 sessions)',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: studySession ==
-                                          '4 times a week (16 sessions)'
-                                      ? true
-                                      : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studySession =
-                                            '4 times a week (16 sessions)';
-                                      } else {
-                                        studySession = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('4 times a week (16 sessions)',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: studySession ==
-                                          '5 times a week (20 sessions)'
-                                      ? true
-                                      : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        studySession =
-                                            '5 times a week (20 sessions)';
-                                      } else {
-                                        studySession = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('5 times a week (20 sessions)',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: sizeBetweenCards),
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          'How long would you want the sessions to be? (You get to choose this too)',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value:
-                                      sessionLength == '1 hour' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        sessionLength = '1 hour';
-                                      } else {
-                                        sessionLength = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('1 hour',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value: sessionLength == '1.5 hour'
-                                      ? true
-                                      : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        sessionLength = '1.5 hour';
-                                      } else {
-                                        sessionLength = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('1.5 hour',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                          ListTile(
-                              leading: Checkbox(
-                                  checkColor: HexColor('#FFF116'),
-                                  value:
-                                      sessionLength == '2 hour' ? true : false,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      if (value == true) {
-                                        sessionLength = '2 hour';
-                                      } else {
-                                        sessionLength = null;
-                                      }
-                                    });
-                                  }),
-                              title: Transform(
-                                transform:
-                                    Matrix4.translationValues(-16, 0.0, 0.0),
-                                child: Text('2 hour',
-                                    style: TextStyle(fontSize: 20)),
-                              )),
-                        ],
-                      ),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: sizeBetweenCards),
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          'What time would you like the session to take place? (Make sure to keep time to relax as well, you have your whole life to be busy!) ',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5),
-                        child: FlatButton(
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            minWidth: 40,
-                            child: Row(
-                              children: [
-                                Text(
-                                  time,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Icon(Icons.access_time),
-                              ],
-                            ),
-                            onPressed: () {
-                              showTimePicker(
-                                      context: context,
-                                      initialTime: TimeOfDay.now())
-                                  .then((times) {
-                                setState(() {
-                                  studyTime = times;
-                                  time = times.hour.toString() +
-                                      ':' +
-                                      times.minute.toString();
-                                });
-                              });
-                            }),
-                      ),
-                      SizedBox(height: 30),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                height: 40,
-                width: 150,
-                child: RaisedButton(
-                  color: HexColor('#3c8ed3'),
-                  onPressed: () {
-                    if (email == null ||
-                        number == null ||
-                        gender == null ||
-                        birthdate == null ||
-                        number == null ||
-                        school == null ||
-                        classTemp == null ||
-                        boardTemp == null ||
-                        hobbies == null ||
-                        tvShow == null ||
-                        futureStream == null ||
-                        studyTime == null ||
-                        sessionLength == null ||
-                        time == null) {
-                      _showAlertDialog(context);
-                    } else {
-                      if (board == "Other") {
-                        board = boardTemp;
-                      }
-                      if (studyclass == "Other") {
-                        studyclass = classTemp;
-                      }
-                      updateDatabase();
-                      print(studyclass + ' ' + board);
-                    }
-                  },
-                  child: Text("Submit",
-                      style: TextStyle(
-                        color: HexColor('#FFF116'),
-                        fontSize: 20,
-                        letterSpacing: 1.2,
-                      )),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                ),
-              ),
-              SizedBox(height: 50),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-Future updateDatabase() async {}
-
-Widget _textFields(
-    BuildContext context, String title, String texthint, int index) {
+Widget _textField({int detailInfo = 0}) {
   return Container(
-    width: MediaQuery.of(context).size.width - 20,
-    child: Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              title,
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Container(
-                width: 200,
-                child: TextField(
-                  decoration: InputDecoration(
-                      hintText: texthint, hintStyle: TextStyle(fontSize: 18)),
-                  onChanged: ((value) {
-                    if (index == 0) {
-                      email = value;
-                    } else if (index == 1) {
-                      name = value;
-                    } else if (index == 2) {
-                      number = value;
-                    } else if (index == 3) {
-                      school = value;
-                    } else if (index == 4) {
-                      hobbies = value;
-                    } else if (index == 5) {
-                      tvShow = value;
-                    } else if (index == 6) {
-                      futureStream = value;
-                    }
-                  }),
-                )),
-          ),
-          SizedBox(height: 30),
-        ],
-      ),
+    height: 50,
+    padding: EdgeInsets.only(left: 20),
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(0.9),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey[300],
+          offset: Offset(5.0, 5.0),
+          blurRadius: 5.0,
+          spreadRadius: 2,
+        ),
+      ],
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+    ),
+    child: TextField(
+      decoration: InputDecoration(border: InputBorder.none),
+      onChanged: ((value) {
+        switch (detailInfo) {
+          case 1:
+            menteeSchool = value;
+            break;
+          case 2:
+            menteeClass = value;
+            break;
+          case 3:
+            menteeBoard = value;
+            break;
+          case 4:
+            menteeTime = value;
+            break;
+          case 5:
+            menteeTvShow = value;
+            break;
+          case 6:
+            menteeAspiredCollege = value;
+            break;
+        }
+      }),
     ),
   );
 }
 
-Widget _showAlertDialog(BuildContext context) {
-  AlertDialog alert = AlertDialog(
-    title: Text("Error"),
-    content: Text("Please enter all the details"),
-    actions: [
-      FlatButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: Text("Ok"),
-      ),
-    ],
-    elevation: 10,
+showAlertDialog(BuildContext context, String message) {
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.pop(context, true);
+    },
   );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Message"),
+    content: Text(message),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
   showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      });
+    useRootNavigator: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

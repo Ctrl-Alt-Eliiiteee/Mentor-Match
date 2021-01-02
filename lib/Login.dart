@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mentor_match_app/SignUp.dart';
+import 'ChooseAccount.dart';
 import 'ForgotPassword.dart';
 import 'package:page_transition/page_transition.dart';
 import 'Mentee Package/HomeMentee.dart';
@@ -10,16 +12,18 @@ class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
-String Email="";
-String Password="";
+
+String Email = "";
+String Password = "";
+
 class _LoginState extends State<Login> {
   CollectionReference userRefrence =
       FirebaseFirestore.instance.collection('MentorMentee');
   bool checkboxvalue = false;
   @override
   Widget build(BuildContext context) {
-    var h =MediaQuery.of(context).size.height;
-    var w =MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.lightBlue[700],
@@ -36,31 +40,31 @@ class _LoginState extends State<Login> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: h/14,
+                      height: h / 14,
                     ),
                     Material(
                       child: CircleAvatar(
                         backgroundImage: AssetImage('images/Logo.png'),
-                        radius: h/6.72,
+                        radius: h / 6.72,
                       ),
                       shape: CircleBorder(),
                       elevation: 10,
                     ),
                     SizedBox(
-                      height: h/22,
+                      height: h / 22,
                     ),
                     Padding(
-                      padding:  EdgeInsets.all(h/40.0),
+                      padding: EdgeInsets.all(h / 40.0),
                       child: Card(
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(h/44.8)),
+                            borderRadius: BorderRadius.circular(h / 44.8)),
                         child: Padding(
-                          padding:  EdgeInsets.all(h/33.6),
+                          padding: EdgeInsets.all(h / 33.6),
                           child: Column(
                             children: [
                               SizedBox(
-                                height: h/19.2,
+                                height: h / 19.2,
                                 child: Stack(
                                   children: <Widget>[
                                     Align(
@@ -68,29 +72,29 @@ class _LoginState extends State<Login> {
                                       child: Icon(
                                         Icons.mail,
                                         color: Colors.deepPurple[400],
-                                        size: h/44.8,
+                                        size: h / 44.8,
                                       ),
                                     ),
                                     TextField(
-                                      onChanged: (text){
-                                        Email=text;
+                                      onChanged: (text) {
+                                        Email = text;
                                       },
                                       enableInteractiveSelection: false,
                                       decoration: InputDecoration(
-                                        contentPadding:
-                                         EdgeInsets.symmetric(
-                                            vertical: h/44.8,
-                                            horizontal: h/33.6),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: h / 44.8,
+                                            horizontal: h / 33.6),
                                         hintText: 'Email',
-                                        hintStyle: TextStyle(fontSize: h/67.2),
+                                        hintStyle:
+                                            TextStyle(fontSize: h / 67.2),
                                         enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                              //color: Colors.black,
-                                            )),
+                                                //color: Colors.black,
+                                                )),
                                         focusedBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                            // color: Colors.black,
-                                          ),
+                                              // color: Colors.black,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -98,10 +102,10 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               SizedBox(
-                                height: h/134.4,
+                                height: h / 134.4,
                               ),
                               SizedBox(
-                                height: h/19.2,
+                                height: h / 19.2,
                                 child: Stack(
                                   children: <Widget>[
                                     Align(
@@ -109,30 +113,30 @@ class _LoginState extends State<Login> {
                                       child: Icon(
                                         Icons.lock,
                                         color: Colors.deepPurple[400],
-                                        size: h/44.8,
+                                        size: h / 44.8,
                                       ),
                                     ),
                                     TextField(
-                                      onChanged: (text){
-                                        Password=text;
+                                      onChanged: (text) {
+                                        Password = text;
                                       },
                                       enableInteractiveSelection: false,
                                       obscureText: true,
                                       decoration: InputDecoration(
-                                        contentPadding:
-                                         EdgeInsets.symmetric(
-                                            vertical: h/44.8,
-                                            horizontal: h/33.6),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: h / 44.8,
+                                            horizontal: h / 33.6),
                                         hintText: 'Password',
-                                        hintStyle: TextStyle(fontSize: h/67.2),
+                                        hintStyle:
+                                            TextStyle(fontSize: h / 67.2),
                                         enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
-                                              //color: Colors.black,
-                                            )),
+                                                //color: Colors.black,
+                                                )),
                                         focusedBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                            // color: Colors.black,
-                                          ),
+                                              // color: Colors.black,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -140,19 +144,19 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               SizedBox(
-                                height: h/67.2,
+                                height: h / 67.2,
                               ),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
                                       Container(
-                                        height: h/33.6,
-                                        width: h/33.6,
+                                        height: h / 33.6,
+                                        width: h / 33.6,
                                         child: Transform.scale(
-                                          scale: h/896,
+                                          scale: h / 896,
                                           child: Checkbox(
                                             value: checkboxvalue,
                                             activeColor: Colors.lightBlue[700],
@@ -168,80 +172,125 @@ class _LoginState extends State<Login> {
                                         'Remember me',
                                         style: TextStyle(
                                           fontFamily: 'Lato',
-                                          fontSize: h/56,
+                                          fontSize: h / 56,
                                         ),
                                       ),
                                     ],
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.pushReplacement(context, PageTransition(
-                                          child: ForgotPassword(),
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 1000)
-                                      ));
+                                      Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                              child: ForgotPassword(),
+                                              type: PageTransitionType.fade,
+                                              duration: Duration(
+                                                  milliseconds: 1000)));
                                     },
                                     child: Text(
                                       'forgot password?',
                                       style: TextStyle(
                                         fontFamily: 'Lato',
-                                        fontSize: h/56,
+                                        fontSize: h / 56,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: h/33.6,
+                                height: h / 33.6,
                               ),
                               Container(
-                                width: h/3.36,
-                                height: h/16.8,
+                                width: h / 3.36,
+                                height: h / 16.8,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(h/33.6),
+                                  borderRadius: BorderRadius.circular(h / 33.6),
                                   gradient: LinearGradient(colors: [
                                     Colors.yellowAccent,
                                     Colors.yellowAccent[700],
                                   ]),
                                 ),
                                 child: FlatButton(
-                                  onPressed: () async{
-                                    //TODO
-                                    try {
-                                      UserCredential newUser = await FirebaseAuth
-                                          .instance.signInWithEmailAndPassword(
-                                          email: Email, password: Password);
-                                      userRefrence.doc(Email.substring(0, Email.indexOf('@'))).get().then((DocumentSnapshot documentSnapshot) {
-                                        if (documentSnapshot.exists) {
-                                          var select1 = documentSnapshot
-                                              .data()['select'];
-                                          print(select1);
-                                          //  CircleAvtarImage=link.toString();
-                                          if (select1 == 'Mentor') {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomeMentor()));
-                                          } else if (select1 == 'Mentee') {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        HomeMentee()));
+                                    onPressed: () async {
+                                      //TODO
+                                      try {
+                                        await FirebaseAuth.instance
+                                            .signInWithEmailAndPassword(
+                                                email: Email,
+                                                password: Password)
+                                            .catchError((e) {
+                                          showAlertDialog(
+                                              context, 'Wrong Credentials');
+                                        });
+                                        userRefrence
+                                            .doc(Email.substring(
+                                                0, Email.indexOf('@')))
+                                            .get()
+                                            .then((DocumentSnapshot
+                                                documentSnapshot) {
+                                          if (documentSnapshot.exists) {
+                                            bool select1 = documentSnapshot
+                                                .data()['formFilled'];
+                                            print(select1);
+                                            //  CircleAvtarImage=link.toString();
+                                            if (select1 == false) {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ChooseAccount()));
+                                            } else if (select1 == true) {
+                                              userRefrence
+                                                  .doc(Email.substring(
+                                                      0, Email.indexOf('@')))
+                                                  .get()
+                                                  .then((DocumentSnapshot
+                                                      documentSnapshot) {
+                                                if (documentSnapshot.exists) {
+                                                  String select2 =
+                                                      documentSnapshot
+                                                          .data()['select'];
+                                                  if (select2 == 'mentor') {
+                                                    Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    800),
+                                                            child:
+                                                                HomeMentor()));
+                                                  } else if (select2 ==
+                                                      'mentee') {
+                                                    Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    800),
+                                                            child:
+                                                                HomeMentee()));
+                                                  }
+                                                }
+                                              });
+                                            } else {
+                                              print('Correct the credentials');
+                                            }
                                           } else {
-                                            print('Correct the credentials');
+                                            print('unsucsessful');
                                           }
-                                        } else {
-                                          print('unsucsessful');
-                                        }
+                                        });
+                                      } on FirebaseAuthException catch (e) {
+                                        print(
+                                            'Failed with error code: ${e.code}');
+                                        print(e.message);
                                       }
-                                      );
-                                    }
-                                    catch(e){
-
-                                    }
-                                  },
+                                    },
                                     child: Text(
                                       'Sign In',
                                       style: TextStyle(
@@ -252,25 +301,31 @@ class _LoginState extends State<Login> {
                                     )),
                               ),
                               Padding(
-                                padding:  EdgeInsets.all(h/84),
+                                padding: EdgeInsets.all(h / 84),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Don't have an account?",
                                       style: TextStyle(
-                                        fontSize: h/39.52,
+                                        fontSize: h / 39.52,
                                         fontFamily: 'Lato',
                                       ),
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        print('hello world!');
+                                        Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                type: PageTransitionType.fade,
+                                                duration:
+                                                    Duration(milliseconds: 800),
+                                                child: SignUpForm()));
                                       },
                                       child: Text(
                                         ' Sign Up',
                                         style: TextStyle(
-                                            fontSize: h/39.52,
+                                            fontSize: h / 39.52,
                                             fontFamily: 'Lato',
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -279,14 +334,14 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               Padding(
-                                padding:  EdgeInsets.all(h/30.54),
+                                padding: EdgeInsets.all(h / 30.54),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Container(
                                       height: 1,
-                                      width: h/13.44,
+                                      width: h / 13.44,
                                       color: Colors.black54,
                                     ),
                                     Text(
@@ -297,7 +352,7 @@ class _LoginState extends State<Login> {
                                     ),
                                     Container(
                                       height: 1,
-                                      width: h/13.44,
+                                      width: h / 13.44,
                                       color: Colors.black54,
                                     ),
                                   ],
@@ -307,11 +362,15 @@ class _LoginState extends State<Login> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage: AssetImage('images/fblogo.png'),
+                                    backgroundImage:
+                                        AssetImage('images/fblogo.png'),
                                   ),
-                                  SizedBox(width: h/67.2,),
+                                  SizedBox(
+                                    width: h / 67.2,
+                                  ),
                                   CircleAvatar(
-                                    backgroundImage: AssetImage('images/glogo.png'),
+                                    backgroundImage:
+                                        AssetImage('images/glogo.png'),
                                   )
                                 ],
                               )
