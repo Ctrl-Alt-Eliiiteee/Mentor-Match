@@ -12,6 +12,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   String ContactNumber="";
   @override
   Widget build(BuildContext context) {
+    var h =MediaQuery.of(context).size.height;
+    var w =MediaQuery.of(context).size.width;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.lightBlue[700],
@@ -21,36 +23,38 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Image.asset(
                 'images/Maskwhite.png',
                 fit: BoxFit.cover,
+                height: h,
+                width: w,
               ),
               Center(
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 50,
+                      height: h/13.44,
                     ),
                     Material(
                       child: CircleAvatar(
                         backgroundImage: AssetImage('images/Logo.png'),
-                        radius: 100.0,
+                        radius: h/6.72,
                       ),
                       shape: CircleBorder(),
                       elevation: 10,
                     ),
                     SizedBox(
-                      height: 30,
+                      height: h/22.4,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(25.0),
+                      padding:  EdgeInsets.all(h/26.88),
                       child: Card(
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)),
+                            borderRadius: BorderRadius.circular(h/44.8)),
                         child: Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding:  EdgeInsets.all(h/33.6),
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 35,
+                                height: h/19.2,
                                 child: Stack(
                                   children: <Widget>[
                                     Align(
@@ -58,7 +62,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       child: Icon(
                                         Icons.mail,
                                         color: Colors.deepPurple[400],
-                                        size: 15,
+                                        size: h/44.8,
                                       ),
                                     ),
                                     TextField(
@@ -67,11 +71,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       },
                                       decoration: InputDecoration(
                                         contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 15.0,
-                                            horizontal: 20.0),
+                                        EdgeInsets.symmetric(
+                                            vertical: h/44.8,
+                                            horizontal: h/33.6),
                                         hintText: 'Email',
-                                        hintStyle: TextStyle(fontSize: 10),
+                                        hintStyle: TextStyle(fontSize: h/67.2),
                                         enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               //color: Colors.black,
@@ -87,10 +91,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 ),
                               ),
                               SizedBox(
-                                height: 5,
+                                height: h/134.4,
                               ),
                               SizedBox(
-                                height: 35,
+                                height: h/19.2,
                                 child: Stack(
                                   children: <Widget>[
                                     Align(
@@ -98,7 +102,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       child: Icon(
                                         Icons.phone,
                                         color: Colors.deepPurple[400],
-                                        size: 15,
+                                        size: h/44.8,
                                       ),
                                     ),
                                     TextField(
@@ -107,11 +111,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       },
                                       decoration: InputDecoration(
                                         contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 15.0,
-                                            horizontal: 20.0),
+                                         EdgeInsets.symmetric(
+                                            vertical: h/44.8,
+                                            horizontal: h/33.6),
                                         hintText: 'Contact Number',
-                                        hintStyle: TextStyle(fontSize: 10),
+                                        hintStyle: TextStyle(fontSize: h/67.2),
                                         enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               //color: Colors.black,
@@ -128,19 +132,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               ),
 
                               SizedBox(
-                                height: 20,
+                                height: h/33.6,
                               ),
                               Text('A confirmation mail has been sent to your Mail ID ',
                                 style: TextStyle(
                                   fontFamily: 'Lato',
-                                  fontSize: 12,
+                                  fontSize: h/56,
                                 ),),
                               SizedBox(
-                                height: 20,
+                                height: h/33.6,
                               ),
                               Container(
-                                width: 200,
-                                height: 40,
+                                width: h/3.36,
+                                height: h/16.8,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   gradient: LinearGradient(colors: [

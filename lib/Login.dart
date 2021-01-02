@@ -19,6 +19,8 @@ class _LoginState extends State<Login> {
   bool checkboxvalue = false;
   @override
   Widget build(BuildContext context) {
+    var h =MediaQuery.of(context).size.height;
+    var w =MediaQuery.of(context).size.width;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.lightBlue[700],
@@ -35,31 +37,31 @@ class _LoginState extends State<Login> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 50,
+                      height: h/14,
                     ),
                     Material(
                       child: CircleAvatar(
                         backgroundImage: AssetImage('images/Logo.png'),
-                        radius: 100.0,
+                        radius: h/6.72,
                       ),
                       shape: CircleBorder(),
                       elevation: 10,
                     ),
                     SizedBox(
-                      height: 30,
+                      height: h/22,
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(25.0),
+                      padding:  EdgeInsets.all(h/40.0),
                       child: Card(
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)),
+                            borderRadius: BorderRadius.circular(h/44.8)),
                         child: Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding:  EdgeInsets.all(h/33.6),
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 35,
+                                height: h/19.2,
                                 child: Stack(
                                   children: <Widget>[
                                     Align(
@@ -67,7 +69,7 @@ class _LoginState extends State<Login> {
                                       child: Icon(
                                         Icons.mail,
                                         color: Colors.deepPurple[400],
-                                        size: 15,
+                                        size: h/44.8,
                                       ),
                                     ),
                                     TextField(
@@ -76,11 +78,11 @@ class _LoginState extends State<Login> {
                                       },
                                       decoration: InputDecoration(
                                         contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 15.0,
-                                            horizontal: 20.0),
+                                         EdgeInsets.symmetric(
+                                            vertical: h/44.8,
+                                            horizontal: h/33.6),
                                         hintText: 'Email',
-                                        hintStyle: TextStyle(fontSize: 10),
+                                        hintStyle: TextStyle(fontSize: h/67.2),
                                         enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               //color: Colors.black,
@@ -96,10 +98,10 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               SizedBox(
-                                height: 5,
+                                height: h/134.4,
                               ),
                               SizedBox(
-                                height: 35,
+                                height: h/19.2,
                                 child: Stack(
                                   children: <Widget>[
                                     Align(
@@ -107,7 +109,7 @@ class _LoginState extends State<Login> {
                                       child: Icon(
                                         Icons.lock,
                                         color: Colors.deepPurple[400],
-                                        size: 15,
+                                        size: h/44.8,
                                       ),
                                     ),
                                     TextField(
@@ -117,11 +119,11 @@ class _LoginState extends State<Login> {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         contentPadding:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 15.0,
-                                            horizontal: 20.0),
+                                         EdgeInsets.symmetric(
+                                            vertical: h/44.8,
+                                            horizontal: h/33.6),
                                         hintText: 'Password',
-                                        hintStyle: TextStyle(fontSize: 10),
+                                        hintStyle: TextStyle(fontSize: h/67.2),
                                         enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               //color: Colors.black,
@@ -137,7 +139,7 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               SizedBox(
-                                height: 10,
+                                height: h/67.2,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -146,10 +148,10 @@ class _LoginState extends State<Login> {
                                   Row(
                                     children: [
                                       Container(
-                                        height: 20,
-                                        width: 20,
+                                        height: h/33.6,
+                                        width: h/33.6,
                                         child: Transform.scale(
-                                          scale: 0.75,
+                                          scale: h/896,
                                           child: Checkbox(
                                             value: checkboxvalue,
                                             activeColor: Colors.lightBlue[700],
@@ -165,13 +167,16 @@ class _LoginState extends State<Login> {
                                         'Remember me',
                                         style: TextStyle(
                                           fontFamily: 'Lato',
-                                          fontSize: 12,
+                                          fontSize: h/56,
                                         ),
                                       ),
                                     ],
                                   ),
                                   InkWell(
                                     onTap: () {
+                                      print(h);
+                                      print("heoght");
+                                      print(w);
                                       Navigator.pushReplacement(context, PageTransition(
                                           child: ForgotPassword(),
                                           type: PageTransitionType.fade,
@@ -182,20 +187,20 @@ class _LoginState extends State<Login> {
                                       'forgot password?',
                                       style: TextStyle(
                                         fontFamily: 'Lato',
-                                        fontSize: 12,
+                                        fontSize: h/56,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 20,
+                                height: h/33.6,
                               ),
                               Container(
-                                width: 200,
-                                height: 40,
+                                width: h/3.36,
+                                height: h/16.8,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(h/33.6),
                                   gradient: LinearGradient(colors: [
                                     Colors.yellowAccent,
                                     Colors.yellowAccent[700],
@@ -249,14 +254,14 @@ class _LoginState extends State<Login> {
                                     )),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:  EdgeInsets.all(h/84),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Don't have an account?",
                                       style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: h/39.52,
                                         fontFamily: 'Lato',
                                       ),
                                     ),
@@ -267,7 +272,7 @@ class _LoginState extends State<Login> {
                                       child: Text(
                                         ' Sign Up',
                                         style: TextStyle(
-                                            fontSize: 17,
+                                            fontSize: h/39.52,
                                             fontFamily: 'Lato',
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -276,14 +281,14 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(12.0),
+                                padding:  EdgeInsets.all(h/30.54),
                                 child: Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceAround,
                                   children: [
                                     Container(
                                       height: 1,
-                                      width: 50,
+                                      width: h/13.44,
                                       color: Colors.black54,
                                     ),
                                     Text(
@@ -294,7 +299,7 @@ class _LoginState extends State<Login> {
                                     ),
                                     Container(
                                       height: 1,
-                                      width: 50,
+                                      width: h/13.44,
                                       color: Colors.black54,
                                     ),
                                   ],
@@ -304,11 +309,11 @@ class _LoginState extends State<Login> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage: AssetImage('images/facebook.png'),
+                                    backgroundImage: AssetImage('images/fblogo.png'),
                                   ),
-                                  SizedBox(width: 10,),
+                                  SizedBox(width: h/67.2,),
                                   CircleAvatar(
-                                    backgroundImage: AssetImage('images/google.png'),
+                                    backgroundImage: AssetImage('images/glogo.png'),
                                   )
                                 ],
                               )

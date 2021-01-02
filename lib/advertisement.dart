@@ -253,5 +253,4 @@ class HomePage3 extends StatelessWidget {
             ]
         )
     );*/
-  }
-}
+

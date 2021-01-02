@@ -115,19 +115,13 @@ class appSplash extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(
       Duration(milliseconds: 1500),
-      checkFirstSeen() == false
-          ? () => Navigator.pushReplacement(
+       () => Navigator.pushReplacement(
               context,
               PageTransition(
                   child: advertisementPage(),
                   type: PageTransitionType.fade,
                   duration: Duration(milliseconds: 625)))
-          : () => Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  child: Login(),
-                  type: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 625))),
+
     );
 
     return Image.asset(
