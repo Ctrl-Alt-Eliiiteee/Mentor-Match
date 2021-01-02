@@ -80,6 +80,10 @@ flutter:
     - family: Fredoka One
       fonts:
       - asset: fonts/FredokaOne-Regular.ttf
+    - family: Lato
+      fonts:
+      - asset: fonts/Lato-Bold.ttf
+      - asset: fonts/Lato-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
