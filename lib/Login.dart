@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'ForgotPassword.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'Mentee Package/HomeMentee.dart';
 import 'Mentor Package/HomeMentor.dart';
 
@@ -76,6 +75,7 @@ class _LoginState extends State<Login> {
                                       onChanged: (text){
                                         Email=text;
                                       },
+                                      enableInteractiveSelection: false,
                                       decoration: InputDecoration(
                                         contentPadding:
                                          EdgeInsets.symmetric(
@@ -116,6 +116,7 @@ class _LoginState extends State<Login> {
                                       onChanged: (text){
                                         Password=text;
                                       },
+                                      enableInteractiveSelection: false,
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -174,9 +175,6 @@ class _LoginState extends State<Login> {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                      print(h);
-                                      print("heoght");
-                                      print(w);
                                       Navigator.pushReplacement(context, PageTransition(
                                           child: ForgotPassword(),
                                           type: PageTransitionType.fade,

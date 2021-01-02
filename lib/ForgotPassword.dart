@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'Login.dart';
+
 class ForgotPassword extends StatefulWidget {
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
@@ -44,7 +44,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       height: h/22.4,
                     ),
                     Padding(
-                      padding:  EdgeInsets.all(h/26.88),
+                      padding:  EdgeInsets.all(h/40),
                       child: Card(
                         elevation: 10.0,
                         shape: RoundedRectangleBorder(
@@ -69,6 +69,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       onChanged: (text){
                                         Email=text;
                                       },
+                                      enableInteractiveSelection: false,
                                       decoration: InputDecoration(
                                         contentPadding:
                                         EdgeInsets.symmetric(
@@ -109,6 +110,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       onChanged: (text){
                                         ContactNumber=text;
                                       },
+                                      enableInteractiveSelection: false,
                                       decoration: InputDecoration(
                                         contentPadding:
                                          EdgeInsets.symmetric(
