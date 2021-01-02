@@ -2,20 +2,90 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'authentication.dart';
+import 'package:page_transition/page_transition.dart';
+import 'Login.dart';
 
-class advertisementPage extends StatefulWidget {
-  @override
-  _advertisementPageState createState() => _advertisementPageState();
-}
-
-class _advertisementPageState extends State<advertisementPage> {
-
+class advertisementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'images/adv_1.png',
-      fit: BoxFit.cover,
+    return MaterialApp(
+      home: HomePage1(),
     );
+  }
+}
+
+class HomePage1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              image: DecorationImage(
+                  image: AssetImage("images/img1.png"),
+                  fit: BoxFit.cover), // button text
+            )),
+        onTap: () {
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 800),
+                  child: HomePage2()));
+        });
+  }
+}
+
+class HomePage2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              image: DecorationImage(
+                  image: AssetImage("images/img2.png"),
+                  fit: BoxFit.cover), // button text
+            )),
+        onTap: () {
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 800),
+                  child: HomePage3()));
+        });
+  }
+}
+
+class HomePage3 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              image: DecorationImage(
+                  image: AssetImage("images/img3.png"),
+                  fit: BoxFit.cover), // button text
+            )),
+        onTap: () {
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 800),
+                  child: Login()));
+        });
+  }
+}
+
 
     /*return Builder(
         builder: (context) => LiquidSwipe(

@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   page_transition: ^1.1.7+5
+  shared_preferences: 
   animated_text_kit: ^2.5.4
   liquid_swipe: ^1.5.0
   delayed_display: ^1.1.0

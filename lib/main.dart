@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'Login.dart';
 import 'advertisement.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +14,6 @@ Future main() async {
 }
 
 class MentorMatch extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,14 +24,12 @@ class MentorMatch extends StatelessWidget {
 
 // ignore: camel_case_types
 class movingRocket extends StatefulWidget {
-
   @override
   _movingRocketState createState() => _movingRocketState();
 }
 
 // ignore: camel_case_types
 class _movingRocketState extends State<movingRocket> {
-
   final _controller = ScrollController();
 
   @override
@@ -42,22 +41,18 @@ class _movingRocketState extends State<movingRocket> {
 
   @override
   Widget build(BuildContext context) {
-
     Timer(
       Duration(seconds: 2),
-          () => _controller.animateTo(
-          _controller.position.maxScrollExtent,
-          duration: Duration(seconds: 1),
-          curve: Curves.fastOutSlowIn
-      ),
+      () => _controller.animateTo(_controller.position.maxScrollExtent,
+          duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn),
     );
 
     Timer(
       Duration(milliseconds: 2250),
-          () => Navigator.pushReplacement(context, PageTransition(
-          child: appSplash(),
-          duration: Duration(milliseconds: 625)
-      )),
+      () => Navigator.pushReplacement(
+          context,
+          PageTransition(
+              child: appSplash(), duration: Duration(milliseconds: 625))),
     );
 
     return Scaffold(
@@ -68,7 +63,7 @@ class _movingRocketState extends State<movingRocket> {
             children: [
               Container(
                 color: Colors.transparent,
-                height: MediaQuery.of(context).size.height*.4876,
+                height: MediaQuery.of(context).size.height * .4876,
               ),
               Stack(
                 children: [
@@ -85,7 +80,7 @@ class _movingRocketState extends State<movingRocket> {
               Center(
                 child: Container(
                   color: Color(0xff0072bb),
-                  height: MediaQuery.of(context).size.height*.4876,
+                  height: MediaQuery.of(context).size.height * .4876,
                 ),
               ),
             ],
@@ -103,16 +98,36 @@ class _movingRocketState extends State<movingRocket> {
 
 // ignore: camel_case_types
 class appSplash extends StatelessWidget {
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (_seen) {
+      return true;
+    } else {
+      // Set the flag to true at the end of onboarding screen if everything is successfull and so I am commenting it out
+      // await prefs.setBool('seen', true);
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
     Timer(
       Duration(milliseconds: 1500),
-          () => Navigator.pushReplacement(context, PageTransition(
-          child: advertisementPage(),
-          type: PageTransitionType.fade,
-          duration: Duration(milliseconds: 625)
-      )),
+      checkFirstSeen() == false
+          ? () => Navigator.pushReplacement(
+              context,
+              PageTransition(
+                  child: advertisementPage(),
+                  type: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 625)))
+          : () => Navigator.pushReplacement(
+              context,
+              PageTransition(
+                  child: Login(),
+                  type: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 625))),
     );
 
     return Image.asset(
@@ -121,7 +136,6 @@ class appSplash extends StatelessWidget {
     );
   }
 }
-
 
 /*class AppIconSplash extends StatefulWidget {
   @override
