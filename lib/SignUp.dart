@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'Login.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -24,10 +23,13 @@ bool formFilled = false;
 class _SignUpFormState extends State<SignUpForm> {
   CollectionReference userRefrence =
       FirebaseFirestore.instance.collection('MentorMentee');
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          key: _scaffoldKey,
           body: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -196,14 +198,23 @@ class _SignUpFormState extends State<SignUpForm> {
                               number == null ||
                               name == null ||
                               gender == null) {
-                            showAlertDialog(
-                                context, 'Please fill out all the details');
+                            _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text(
+                                  'Please fill out all the details'),
+                              duration: Duration(seconds: 3),
+                            ));
                           } else if (password != confirmPassword) {
-                            showAlertDialog(
-                                context, 'Two Passwords do not match');
+                            _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text(
+                                  'Two Passwords do not match'),
+                              duration: Duration(seconds: 3),
+                            ));
                           } else if (password.length < 8) {
-                            showAlertDialog(context,
-                                'Please enter an 8 or more digit password');
+                            _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text(
+                                  'Please enter an 8 or more digit password'),
+                              duration: Duration(seconds: 3),
+                            ));
                           } else {
                             try {
                               try {

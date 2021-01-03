@@ -2,14 +2,23 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Login.dart';
+import 'Mentee Package/HomeMentee.dart';
+import 'Mentor Package/HomeMentor.dart';
 import 'advertisement.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+String acc = '';
+String seen;
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  final prefs = await SharedPreferences.getInstance();
+  Email = prefs.getString('mentormatch_email');
+  acc = prefs.getString('mentorormatch');
+  seen = prefs.getString('seen');
   runApp(MentorMatch());
 }
 
@@ -17,6 +26,9 @@ class MentorMatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textSelectionHandleColor: Colors.transparent,
+      ),
       home: movingRocket(),
     );
   }
@@ -98,18 +110,6 @@ class _movingRocketState extends State<movingRocket> {
 
 // ignore: camel_case_types
 class appSplash extends StatelessWidget {
-  Future checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen') ?? false);
-
-    if (_seen) {
-      return true;
-    } else {
-      // Set the flag to true at the end of onboarding screen if everything is successfull and so I am commenting it out
-      // await prefs.setBool('seen', true);
-      return false;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,7 @@ class appSplash extends StatelessWidget {
        () => Navigator.pushReplacement(
               context,
               PageTransition(
-                  child: advertisementPage(),
+                  child: Email == '' || acc == '' ? seen == null ? advertisementPage() : Login() : acc == 'mentee' ? HomeMentee() : HomeMentor(),
                   type: PageTransitionType.fade,
                   duration: Duration(milliseconds: 625)))
 

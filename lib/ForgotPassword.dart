@@ -69,7 +69,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       onChanged: (text){
                                         Email=text;
                                       },
-                                      enableInteractiveSelection: false,
                                       decoration: InputDecoration(
                                         contentPadding:
                                         EdgeInsets.symmetric(
@@ -110,7 +109,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       onChanged: (text){
                                         ContactNumber=text;
                                       },
-                                      enableInteractiveSelection: false,
                                       decoration: InputDecoration(
                                         contentPadding:
                                          EdgeInsets.symmetric(

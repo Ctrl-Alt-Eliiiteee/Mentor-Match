@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Login.dart';
 
@@ -18,7 +19,10 @@ class _HomeMenteeState extends State<HomeMentee> {
           children: [
             Text('HOME MENTEE'),
             RaisedButton(
-              onPressed: () {
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                prefs.setString('mentormatch_email', '');
+                prefs.setString('mentorormatch', '');
                 Navigator.push(
                     context,
                     PageTransition(

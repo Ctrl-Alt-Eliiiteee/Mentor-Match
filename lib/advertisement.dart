@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'authentication.dart';
 import 'package:page_transition/page_transition.dart';
 import 'Login.dart';
+import 'main.dart';
 
 class advertisementPage extends StatelessWidget {
   @override
@@ -75,7 +77,10 @@ class HomePage3 extends StatelessWidget {
                   image: AssetImage("images/img3.png"),
                   fit: BoxFit.cover), // button text
             )),
-        onTap: () {
+        onTap: () async {
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString('seen', 'true');
+          main();
           Navigator.push(
               context,
               PageTransition(

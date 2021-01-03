@@ -1,12 +1,17 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mentor_match_app/SignUp.dart';
 import 'ChooseAccount.dart';
 import 'ForgotPassword.dart';
 import 'package:page_transition/page_transition.dart';
 import 'Mentee Package/HomeMentee.dart';
 import 'Mentor Package/HomeMentor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'main.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -15,16 +20,119 @@ class Login extends StatefulWidget {
 
 String Email = "";
 String Password = "";
+bool checkboxvalue = false;
+String method = '';
 
 class _LoginState extends State<Login> {
   CollectionReference userRefrence =
       FirebaseFirestore.instance.collection('MentorMentee');
-  bool checkboxvalue = false;
+  final googleSignIn = GoogleSignIn();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Future check() async {
+    final prefs = await SharedPreferences.getInstance();
+    final curr_user = FirebaseAuth.instance.currentUser;
+    method = 'google';
+    userRefrence
+        .doc(curr_user.email.substring(0, curr_user.email.indexOf('@')))
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      if (!documentSnapshot.exists) {
+        userRefrence
+            .doc(curr_user.email.substring(0, curr_user.email.indexOf('@')))
+            .set({
+          'Email': curr_user.email,
+          'formFilled': false,
+          'Name': curr_user.displayName,
+          'Contact number': curr_user.phoneNumber,
+        })
+            .then((value) => {})
+            .catchError(
+                (error) => print('Failed to add'));
+        prefs.setString(
+            'mentormatch_email',
+            curr_user.email.toString());
+        main();
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ChooseAccount()));
+      }
+      bool select1 = documentSnapshot
+          .data()['formFilled'];
+      String select2 =
+      documentSnapshot
+          .data()['select'];
+      if (select1 == false) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ChooseAccount()));
+      } else if (select1 == true) {
+        if (select2 == 'mentor') {
+          prefs.setString(
+              'mentormatch_email',
+              curr_user.email.toString());
+          prefs.setString(
+              'mentorormatch',
+              select2.toString());
+          main();
+          Navigator.pushReplacement(
+              context,
+              PageTransition(
+                  type:
+                  PageTransitionType
+                      .fade,
+                  duration: Duration(
+                      milliseconds:
+                      200),
+                  child:
+                  HomeMentor()));
+        } else if (select2 ==
+            'mentee') {
+          prefs.setString(
+              'mentormatch_email',
+              curr_user.email.toString());
+          prefs.setString(
+              'mentorormatch',
+              select2.toString());
+          main();
+          Navigator.pushReplacement(
+              context,
+              PageTransition(
+                  type:
+                  PageTransitionType
+                      .fade,
+                  duration: Duration(
+                      milliseconds:
+                      200),
+                  child:
+                  HomeMentee()));
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    disconnect();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void disconnect() async {
+    await googleSignIn.disconnect();
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
     return Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.lightBlue[700],
         body: SingleChildScrollView(
@@ -79,7 +187,8 @@ class _LoginState extends State<Login> {
                                       onChanged: (text) {
                                         Email = text;
                                       },
-                                      enableInteractiveSelection: false,
+                                      keyboardType: TextInputType.emailAddress,
+                                      textCapitalization: TextCapitalization.none,
                                       decoration: InputDecoration(
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: h / 44.8,
@@ -120,7 +229,6 @@ class _LoginState extends State<Login> {
                                       onChanged: (text) {
                                         Password = text;
                                       },
-                                      enableInteractiveSelection: false,
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         contentPadding: EdgeInsets.symmetric(
@@ -214,82 +322,108 @@ class _LoginState extends State<Login> {
                                     onPressed: () async {
                                       //TODO
                                       try {
-                                        await FirebaseAuth.instance
-                                            .signInWithEmailAndPassword(
-                                                email: Email,
-                                                password: Password)
-                                            .catchError((e) {
-                                          showAlertDialog(
-                                              context, 'Wrong Credentials');
-                                        });
-                                        userRefrence
-                                            .doc(Email.substring(
-                                                0, Email.indexOf('@')))
-                                            .get()
-                                            .then((DocumentSnapshot
-                                                documentSnapshot) {
-                                          if (documentSnapshot.exists) {
-                                            bool select1 = documentSnapshot
-                                                .data()['formFilled'];
-                                            print(select1);
-                                            //  CircleAvtarImage=link.toString();
-                                            if (select1 == false) {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ChooseAccount()));
-                                            } else if (select1 == true) {
-                                              userRefrence
-                                                  .doc(Email.substring(
-                                                      0, Email.indexOf('@')))
-                                                  .get()
-                                                  .then((DocumentSnapshot
-                                                      documentSnapshot) {
-                                                if (documentSnapshot.exists) {
-                                                  String select2 =
-                                                      documentSnapshot
-                                                          .data()['select'];
-                                                  if (select2 == 'mentor') {
-                                                    Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                            type:
-                                                                PageTransitionType
-                                                                    .fade,
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    800),
-                                                            child:
-                                                                HomeMentor()));
-                                                  } else if (select2 ==
-                                                      'mentee') {
-                                                    Navigator.push(
-                                                        context,
-                                                        PageTransition(
-                                                            type:
-                                                                PageTransitionType
-                                                                    .fade,
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    800),
-                                                            child:
-                                                                HomeMentee()));
-                                                  }
-                                                }
+                                        final prefs = await SharedPreferences.getInstance();
+                                        final result = await InternetAddress.lookup('google.com');
+                                        if (result.isEmpty && result[0].rawAddress.isEmpty) {
+                                          _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                            content: Text(
+                                                'Network Issue! Please Check Your Internet'),
+                                            duration: Duration(seconds: 3),
+                                          ));
+                                        }
+                                        else if(Email.length<10 || !Email.contains('@gmail.com') || Password.length<8)
+                                          _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                            content: Text(
+                                                'Please Fill the Required Credentials'),
+                                            duration: Duration(seconds: 3),
+                                          ));
+                                        else{
+                                          userRefrence
+                                              .doc(Email.substring(
+                                              0, Email.indexOf('@')))
+                                              .get()
+                                              .then((DocumentSnapshot
+                                          documentSnapshot) async {
+                                            if (documentSnapshot.exists) {
+                                              bool select1 = documentSnapshot
+                                                  .data()['formFilled'];
+                                              String select2 =
+                                              documentSnapshot
+                                                  .data()['select'];
+                                              await FirebaseAuth.instance
+                                                  .signInWithEmailAndPassword(
+                                                  email: Email,
+                                                  password: Password)
+                                                  .catchError((e) {
+                                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      'Account Does Not Exists!'),
+                                                  duration: Duration(seconds: 3),
+                                                ));
                                               });
-                                            } else {
-                                              print('Correct the credentials');
+                                              if (select1 == false) {
+                                                Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ChooseAccount()));
+                                              } else if (select1 == true) {
+                                                if (select2 == 'mentor') {
+                                                  if(checkboxvalue == true) {
+                                                    prefs.setString(
+                                                        'mentormatch_email',
+                                                        Email.toString());
+                                                    prefs.setString(
+                                                        'mentorormatch',
+                                                        select2.toString());
+                                                  }
+                                                  main();
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      PageTransition(
+                                                          type:
+                                                          PageTransitionType
+                                                              .fade,
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                              200),
+                                                          child:
+                                                          HomeMentor()));
+                                                } else if (select2 ==
+                                                    'mentee') {
+                                                  if(checkboxvalue == true) {
+                                                    prefs.setString(
+                                                        'mentormatch_email',
+                                                        Email.toString());
+                                                    prefs.setString(
+                                                        'mentorormatch',
+                                                        select2.toString());
+                                                  }
+                                                  main();
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      PageTransition(
+                                                          type:
+                                                          PageTransitionType
+                                                              .fade,
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                              200),
+                                                          child:
+                                                          HomeMentee()));
+                                                }
+                                              }
                                             }
-                                          } else {
-                                            print('unsucsessful');
-                                          }
-                                        });
-                                      } on FirebaseAuthException catch (e) {
-                                        print(
-                                            'Failed with error code: ${e.code}');
-                                        print(e.message);
-                                      }
+                                            else {
+                                              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                                content: Text(
+                                                    'Account Does Not Exists!'),
+                                                duration: Duration(seconds: 3),
+                                              ));
+                                            }
+                                          });
+                                        }
+                                      } catch (e) {}
                                     },
                                     child: Text(
                                       'Sign In',
@@ -362,6 +496,7 @@ class _LoginState extends State<Login> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   CircleAvatar(
+                                    radius: h*0.028,
                                     backgroundImage:
                                         AssetImage('images/fblogo.png'),
                                   ),
@@ -369,8 +504,53 @@ class _LoginState extends State<Login> {
                                     width: h / 67.2,
                                   ),
                                   CircleAvatar(
+                                    radius: h*0.028,
                                     backgroundImage:
                                         AssetImage('images/glogo.png'),
+                                    child: IconButton(
+                                      splashRadius: h*0.035,
+                                      color: Colors.transparent,
+                                      icon: Icon(Icons.ac_unit, color: Colors.transparent,),
+                                      onPressed: () async {
+                                        try {
+                                          final user = await googleSignIn.signIn();
+                                          final result = await InternetAddress.lookup('google.com');
+                                          if (result.isEmpty && result[0].rawAddress.isEmpty) {
+                                            _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                              content: Text(
+                                                  'Network Issue! Please Check Your Internet'),
+                                              duration: Duration(seconds: 3),
+                                            ));
+                                          } else if (user == null) {
+                                            return;
+                                          } else {
+                                            final googleAuth = await user.authentication;
+                                            final credential =
+                                            GoogleAuthProvider.credential(
+                                              accessToken: googleAuth.accessToken,
+                                              idToken: googleAuth.idToken,
+                                            );
+                                            Fluttertoast.showToast(
+                                                msg: "Please Wait!",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.black54,
+                                                textColor: Colors.white,
+                                                fontSize: 13.0);
+                                            await FirebaseAuth.instance
+                                                .signInWithCredential(credential);
+                                            check();
+                                          }
+                                        } catch (e) {
+                                          _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                            content: Text(
+                                                'Network Issue! Please Check Your Internet'),
+                                            duration: Duration(seconds: 3),
+                                          ));
+                                        }
+                                      },
+                                    ),
                                   )
                                 ],
                               )

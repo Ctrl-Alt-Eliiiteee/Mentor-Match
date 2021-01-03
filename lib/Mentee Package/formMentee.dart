@@ -4,7 +4,9 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mentor_match_app/Login.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../main.dart';
 import 'HomeMentee.dart';
 
 class MenteeForm extends StatefulWidget {
@@ -249,7 +251,7 @@ class _MneteeFormState extends State<MenteeForm> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 70.0, vertical: 15.0),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (menteeSchool == null ||
                               menteeClass == null ||
                               menteeBoard == null ||
@@ -284,6 +286,16 @@ class _MneteeFormState extends State<MenteeForm> {
                                           child: HomeMentee())))
                                   .catchError((error) => showAlertDialog(
                                       context, 'Some error occured'));
+                              final prefs = await SharedPreferences.getInstance();
+                              if(checkboxvalue == true || method =='google') {
+                                prefs.setString(
+                                    'mentormatch_email',
+                                    Email.toString());
+                                prefs.setString(
+                                    'mentorormatch',
+                                    'mentee');
+                              }
+                              main();
                             } catch (e) {
                               showAlertDialog(context, e);
                             }
