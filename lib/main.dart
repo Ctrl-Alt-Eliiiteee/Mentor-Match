@@ -1,24 +1,27 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mentor_match_app/Pages/Navbar.dart';
 import 'Login.dart';
-import 'Mentee Package/HomeMentee.dart';
-import 'Mentor Package/HomeMentor.dart';
 import 'advertisement.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String acc = '';
-String seen;
-
+bool seen;
+String email;
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final prefs = await SharedPreferences.getInstance();
-  Email = prefs.getString('mentormatch_email');
-  acc = prefs.getString('mentorormatch');
-  seen = prefs.getString('seen');
+  email = prefs.getString('mentormatch_email');
+  //acc = prefs.getString('mentorormatch');
+  seen = prefs.getBool('IntroSeen');
+  seen == null
+      ? print("Has not seen intropages")
+      : print("Has seen intropages");
+  print(email);
   runApp(MentorMatch());
 }
 
@@ -29,7 +32,11 @@ class MentorMatch extends StatelessWidget {
       theme: ThemeData(
         textSelectionHandleColor: Colors.transparent,
       ),
-      home: movingRocket(),
+      home: seen == null
+          ? movingRocket()
+          : (email == '')
+              ? Login()
+              : NavBar(),
     );
   }
 }
@@ -58,13 +65,14 @@ class _movingRocketState extends State<movingRocket> {
       () => _controller.animateTo(_controller.position.maxScrollExtent,
           duration: Duration(seconds: 1), curve: Curves.fastOutSlowIn),
     );
-
     Timer(
       Duration(milliseconds: 2250),
       () => Navigator.pushReplacement(
           context,
           PageTransition(
-              child: appSplash(), duration: Duration(milliseconds: 625))),
+              type: PageTransitionType.fade,
+              child: appSplash(),
+              duration: Duration(milliseconds: 625))),
     );
 
     return Scaffold(
@@ -110,19 +118,16 @@ class _movingRocketState extends State<movingRocket> {
 
 // ignore: camel_case_types
 class appSplash extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     Timer(
-      Duration(milliseconds: 1500),
-       () => Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  child: Email == '' || acc == '' ? seen == null ? advertisementPage() : Login() : acc == 'mentee' ? HomeMentee() : HomeMentor(),
-                  type: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 625)))
-
-    );
+        Duration(milliseconds: 1500),
+        () => Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: Introduction(),
+                type: PageTransitionType.fade,
+                duration: Duration(milliseconds: 625))));
 
     return Image.asset(
       'images/mentor match splash screen.png',

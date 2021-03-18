@@ -1,259 +1,315 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mentor_match_app/Pages/Navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'authentication.dart';
 import 'package:page_transition/page_transition.dart';
 import 'Login.dart';
 import 'main.dart';
 
-class advertisementPage extends StatelessWidget {
+class Introduction extends StatefulWidget {
+  @override
+  _IntroductionState createState() => _IntroductionState();
+}
+
+class _IntroductionState extends State<Introduction> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage1(),
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                'images/Background.png',
+              ),
+              fit: BoxFit.cover)),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                            letterSpacing: 1.4,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.blue[900]),
+                      ),
+                    ),
+                  )),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  height: height / 2,
+                  width: width - 50,
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      border: Border.all(color: Colors.white, width: 1.5),
+                      borderRadius:
+                          BorderRadius.only(topRight: Radius.circular(100))),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 25, top: 40, right: 50),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: 'What is Mentor Match?\n\n',
+                                style: TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.blue[900],
+                                    fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text:
+                                    'Mentor Match is a novel solution to all your studying problems by helping you smarter, not harder.',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.blue[900],
+                                    fontWeight: FontWeight.w300)),
+                          ]),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 30.0, bottom: 40),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 400),
+                                      child: IntroPage2()));
+                            },
+                            child: Text(
+                              "Next >",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.blue[900],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
-class HomePage1 extends StatelessWidget {
+class IntroPage2 extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              image: DecorationImage(
-                  image: AssetImage("images/img1.png"),
-                  fit: BoxFit.cover), // button text
-            )),
-        onTap: () {
-          Navigator.push(
-              context,
-              PageTransition(
-                  type: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 800),
-                  child: HomePage2()));
-        });
-  }
+  _IntroPage2State createState() => _IntroPage2State();
 }
 
-class HomePage2 extends StatelessWidget {
+class _IntroPage2State extends State<IntroPage2> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              image: DecorationImage(
-                  image: AssetImage("images/img2.png"),
-                  fit: BoxFit.cover), // button text
-            )),
-        onTap: () {
-          Navigator.push(
-              context,
-              PageTransition(
-                  type: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 800),
-                  child: HomePage3()));
-        });
-  }
-}
-
-class HomePage3 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              image: DecorationImage(
-                  image: AssetImage("images/img3.png"),
-                  fit: BoxFit.cover), // button text
-            )),
-        onTap: () async {
-          final prefs = await SharedPreferences.getInstance();
-          prefs.setString('seen', 'true');
-          main();
-          Navigator.push(
-              context,
-              PageTransition(
-                  type: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 800),
-                  child: Login()));
-        });
-  }
-}
-
-/*return Builder(
-        builder: (context) => LiquidSwipe(
-            pages: [
-              Stack(
-                children: [
-                  Container(
-                    color: Colors.yellow,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 40, right: 30),
-                      child: SizedBox(
-                        height: 45,
-                        width: 75,
-                        child: RaisedButton(
-                          color: Colors.transparent,
-                          elevation: 0.1,
-                          child: Text(
-                            'SKIP',
-                            style: TextStyle(
-                                color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: 'Fredoka One'
-                            ),
-                          ),
-                          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Authentication()));},
-                        ),
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                'images/Background.png',
+              ),
+              fit: BoxFit.cover)),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                            letterSpacing: 1.4,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.blue[900]),
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Container(
-                        width: 80,
-                        height: 20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                              child: CircleAvatar(
-                                radius: 8,
-                                backgroundColor: Colors.yellow.withOpacity(0.5),
+                  )),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  height: height / 2,
+                  width: width - 50,
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      border: Border.all(color: Colors.white, width: 1.5),
+                      borderRadius:
+                          BorderRadius.only(topRight: Radius.circular(100))),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 25, top: 40, right: 50),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: 'What exactly do we do?\n\n',
+                                style: TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.blue[900],
+                                    fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text:
+                                    'We match students with talented mentors from the best colleges to help students find study methods that suit THEM',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.blue[900],
+                                    fontWeight: FontWeight.w300)),
+                          ]),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 30.0, bottom: 40),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 400),
+                                      child: IntroPage3()));
+                            },
+                            child: Text(
+                              "Next >",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.blue[900],
                               ),
                             ),
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                            ),
-                          ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class IntroPage3 extends StatefulWidget {
+  @override
+  _IntroPage3State createState() => _IntroPage3State();
+}
+
+class _IntroPage3State extends State<IntroPage3> {
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                'images/Background.png',
+              ),
+              fit: BoxFit.cover)),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Align(
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              height: height / 2,
+              width: width - 50,
+              decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.5),
+                  border: Border.all(color: Colors.white, width: 1.5),
+                  borderRadius:
+                      BorderRadius.only(topRight: Radius.circular(100))),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 25, top: 40, right: 50),
+                    child: RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: 'How the process works?\n\n',
+                            style: TextStyle(
+                                fontSize: 35,
+                                color: Colors.blue[900],
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text:
+                                'We hand pick the best college students and match them with your interest, hobbies and personality.',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.blue[900],
+                                fontWeight: FontWeight.w300)),
+                      ]),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 30.0, bottom: 40),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: TextButton(
+                        onPressed: () async {
+                          var prefs = await SharedPreferences.getInstance();
+                          prefs.setBool('IntroSeen', true);
+                          Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  duration: Duration(milliseconds: 400),
+                                  child: Login()));
+                        },
+                        child: Text(
+                          "Next >",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.blue[900],
+                          ),
                         ),
                       ),
                     ),
                   )
                 ],
               ),
-              Stack(
-                children: [
-                  Container(
-                    color: Colors.blue,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Container(
-                        width: 80,
-                        height: 20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                              child: CircleAvatar(
-                                radius: 8,
-                                backgroundColor: Colors.blue.withOpacity(0.5),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Stack(
-                children: [
-                  Container(
-                    color: Colors.yellow,
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 40, right: 30),
-                      child: SizedBox(
-                        height: 45,
-                        width: 76,
-                        child: RaisedButton(
-                          color: Colors.transparent,
-                          elevation: 0.1,
-                          child: Text(
-                            'NEXT',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontFamily: 'Fredoka One'
-                            ),
-                          ),
-                          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Authentication()));},
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Container(
-                        width: 80,
-                        height: 20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                            ),
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              radius: 12,
-                              child: CircleAvatar(
-                                radius: 8,
-                                backgroundColor: Colors.yellow.withOpacity(0.5),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ]
-        )
-    );*/
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
