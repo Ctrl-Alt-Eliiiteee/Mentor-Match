@@ -51,6 +51,7 @@ dependencies:
   flutter_staggered_animations: "^0.1.2"
   chewie: ^0.12.1+1
   video_player: ^1.0.1
+  table_calendar: ^2.3.3
 
 dev_dependencies:
   flutter_test:

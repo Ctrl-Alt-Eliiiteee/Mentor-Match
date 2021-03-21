@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentor_match_app/Mentee%20Package/menteeForm.dart';
+import 'package:mentor_match_app/Mentor%20Package/MonthlyPlanner.dart';
 import 'package:mentor_match_app/Mentor%20Package/mentorHome.dart';
 import 'package:mentor_match_app/Mentor%20Package/mentorProfile.dart';
 
@@ -28,11 +29,13 @@ class _NavBarState extends State<NavBar> {
         child: Scaffold(
           body: (_index == 0)
               ? MentorHome()
-              : (_index == 3)
-                  ? MentorProfile()
-                  : Center(
-                      child: Text("Page no: $_index"),
-                    ),
+              : (_index == 1)
+                  ? Planner()
+                  : (_index == 3)
+                      ? MentorProfile()
+                      : Center(
+                          child: Text("Page no: $_index"),
+                        ),
           backgroundColor: Colors.transparent,
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue[100],
