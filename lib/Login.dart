@@ -250,11 +250,27 @@ class _LoginState extends State<Login> {
                                               .getInstance();
                                           prefs.setString(
                                               'mentormatch_email', _email);
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      NavBar()));
+                                          var user = await Firestore.instance
+                                              .collection('Mentee')
+                                              .doc(_email)
+                                              .get()
+                                              .then((docSnapshot) {
+                                            if (docSnapshot.exists) {
+                                              print("Mentee");
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NavBar()));
+                                            } else {
+                                              print("Mentor");
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NavBar()));
+                                            }
+                                          });
                                         });
                                       }
                                     },

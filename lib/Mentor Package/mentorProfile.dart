@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mentor_match_app/Login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MentorProfile extends StatefulWidget {
   @override
@@ -118,6 +121,7 @@ class _MentorProfileState extends State<MentorProfile> {
           ),
           _button(
               title: "Plan History",
+              context: context,
               icon:
                   Icon(Icons.calendar_today_outlined, color: Colors.blue[900])),
           Container(
@@ -129,6 +133,7 @@ class _MentorProfileState extends State<MentorProfile> {
           ),
           _button(
               title: "Settings",
+              context: context,
               icon: Icon(Icons.settings, color: Colors.blue[900])),
           Container(
             width: MediaQuery.of(context).size.width - 50,
@@ -138,7 +143,9 @@ class _MentorProfileState extends State<MentorProfile> {
             ),
           ),
           _button(
-              title: "Help", icon: Icon(Icons.help, color: Colors.blue[900])),
+              context: context,
+              title: "Help",
+              icon: Icon(Icons.help, color: Colors.blue[900])),
           Container(
             width: MediaQuery.of(context).size.width - 50,
             child: Divider(
@@ -148,6 +155,7 @@ class _MentorProfileState extends State<MentorProfile> {
           ),
           _button(
               title: "Legal",
+              context: context,
               icon: Icon(Icons.paste_sharp, color: Colors.blue[900])),
           Container(
             width: MediaQuery.of(context).size.width - 50,
@@ -162,14 +170,20 @@ class _MentorProfileState extends State<MentorProfile> {
   }
 }
 
-Widget _button({Icon icon, String title, int index}) {
+Widget _button({Icon icon, String title, int index, BuildContext context}) {
   return Padding(
     padding: EdgeInsets.only(right: 20),
     child: Row(
       children: [
         Expanded(
           child: TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
+              await FirebaseAuth.instance.signOut();
+              prefs.setString('mentormatch_email', '');
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Login()));
+            },
             child: ListTile(
               leading: icon,
               title: Text(

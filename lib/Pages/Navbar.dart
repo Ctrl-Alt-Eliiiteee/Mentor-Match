@@ -88,42 +88,44 @@ class _NavBarState extends State<NavBar> {
                   items: [
                     BottomNavigationBarItem(
                         backgroundColor: Colors.transparent,
-                        icon: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
-                          color: (_index == 0)
-                              ? Colors.blue[50].withOpacity(0.7)
-                              : Colors.transparent,
-                          elevation: (_index == 0) ? 3 : 0,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            child: Icon(
-                              Icons.home,
-                            ),
-                          ),
+                        icon: Container(
+                          height: 45,
+                          width: 45,
+                          child: (_index == 0)
+                              ? Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8))),
+                                  color: Colors.blue[50].withOpacity(0.7),
+                                  elevation: (_index == 0) ? 3 : 0,
+                                  child: Icon(
+                                    Icons.home,
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.home,
+                                ),
                         ),
                         label: ''),
                     BottomNavigationBarItem(
                         backgroundColor: Colors.transparent,
                         icon: Padding(
                           padding: EdgeInsets.only(right: 30),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
-                            color: (_index == 1)
-                                ? Colors.blue[50].withOpacity(0.7)
-                                : Colors.blue[300].withOpacity(0),
-                            elevation: (_index == 1) ? 3 : 0,
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              child: Icon(
-                                Icons.calendar_today,
-                              ),
-                            ),
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            child: (_index == 1)
+                                ? Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8))),
+                                    color: Colors.blue[50].withOpacity(0.7),
+                                    elevation: 3,
+                                    child: Icon(
+                                      Icons.calendar_today,
+                                    ),
+                                  )
+                                : Icon(Icons.calendar_today),
                           ),
                         ),
                         label: ''),
@@ -131,39 +133,43 @@ class _NavBarState extends State<NavBar> {
                         backgroundColor: Colors.transparent,
                         icon: Padding(
                           padding: EdgeInsets.only(left: 30),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
-                            color: (_index == 2)
-                                ? Colors.blue[50].withOpacity(0.7)
-                                : Colors.blue[300].withOpacity(0),
-                            elevation: (_index == 2) ? 3 : 0,
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              child: Icon(Icons.phone_android),
-                            ),
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            child: (_index == 2)
+                                ? Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8))),
+                                    color: Colors.blue[50].withOpacity(0.7),
+                                    elevation: 3,
+                                    child: Icon(
+                                      Icons.phone_android,
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.phone_android,
+                                  ),
                           ),
                         ),
                         label: ''),
                     BottomNavigationBarItem(
                         backgroundColor: Colors.transparent,
-                        icon: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8))),
-                          color: (_index == 3)
-                              ? Colors.blue[50].withOpacity(0.7)
-                              : Colors.blue[300].withOpacity(0),
-                          elevation: (_index == 3) ? 3 : 0,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            child: Icon(
-                              Icons.person,
-                            ),
-                          ),
+                        icon: Container(
+                          height: 45,
+                          width: 45,
+                          child: (_index == 3)
+                              ? Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8))),
+                                  color: Colors.blue[50].withOpacity(0.7),
+                                  elevation: 3,
+                                  child: Icon(
+                                    Icons.person,
+                                  ),
+                                )
+                              : Icon(Icons.person),
                         ),
                         label: ''),
                   ],
