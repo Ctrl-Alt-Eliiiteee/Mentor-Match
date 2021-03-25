@@ -1,21 +1,18 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:mentor_match_app/Mentor%20Package/MentorRegistration/Details.dart';
 
 class MentorForm extends StatefulWidget {
   @override
   _MentorFormState createState() => _MentorFormState();
 }
 
-String _firstname;
-String _lastname;
-String _dateOfBirth = 'Date of birth';
-String _state;
-String _city;
-String _phoneNumber;
+String firstname;
+String lastname;
+String dateOfBirth = 'Date of birth';
+String state;
+String city;
+String phoneNumber;
 String _email;
 String _password;
 String _select = 'Mentor';
@@ -83,7 +80,7 @@ class _MentorFormState extends State<MentorForm> {
                                   child: TextFormField(
                                     onChanged: (value) {},
                                     decoration: InputDecoration(
-                                        hintText: _dateOfBirth,
+                                        hintText: dateOfBirth,
                                         hintStyle:
                                             TextStyle(color: Colors.blue[900])),
                                   ),
@@ -100,7 +97,7 @@ class _MentorFormState extends State<MentorForm> {
                                   if (picker != null && picker != _dateTime) {
                                     setState(() {
                                       _dateTime = picker;
-                                      _dateOfBirth = _dateTime.day.toString() +
+                                      dateOfBirth = _dateTime.day.toString() +
                                           '/' +
                                           _dateTime.month.toString() +
                                           '/' +
@@ -139,13 +136,13 @@ class _MentorFormState extends State<MentorForm> {
                 SizedBox(height: 30),
                 ElevatedButton(
                     onPressed: () async {
-                      if (_firstname == null ||
-                          _lastname == null ||
-                          _dateOfBirth == null ||
-                          _state == null ||
-                          _city == null ||
+                      if (firstname == null ||
+                          lastname == null ||
+                          dateOfBirth == null ||
+                          state == null ||
+                          city == null ||
                           _email == null ||
-                          _phoneNumber == null ||
+                          phoneNumber == null ||
                           _password == null) {
                         showAlertDialog(
                             context, "Please fill out all the fields");
@@ -156,28 +153,13 @@ class _MentorFormState extends State<MentorForm> {
                           !_email.contains('.com')) {
                         showAlertDialog(context, 'Invalid email');
                       } else {
-                        try {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: _email, password: _password);
-                        } catch (signUpError) {
-                          if (signUpError is PlatformException) {
-                            if (signUpError.code ==
-                                'ERROR_EMAIL_ALREADY_IN_USE') {
-                              showAlertDialog(
-                                  context, 'Email already registered');
-                            }
-                          }
-                        }
-                        var user = await Firestore.instance.collection(_select);
-                        user.doc(_email).set({
-                          'Firstname': _firstname,
-                          'Lastname': _lastname,
-                          'Date of Birth': _dateOfBirth,
-                          'State': _state,
-                          'City': _city,
-                          'Phone Number': _phoneNumber,
-                        });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MentorDetails(
+                                      email: _email,
+                                      password: _password,
+                                    )));
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -215,15 +197,15 @@ Widget _customTextField(
     child: TextFormField(
       onChanged: (value) {
         if (variable == 0)
-          _firstname = value;
+          firstname = value;
         else if (variable == 1)
-          _lastname = value;
+          lastname = value;
         else if (variable == 2)
-          _state = value;
+          state = value;
         else if (variable == 3)
-          _city = value;
+          city = value;
         else if (variable == 4)
-          _phoneNumber = value;
+          phoneNumber = value;
         else if (variable == 5)
           _email = value;
         else if (variable == 6) _password = value;

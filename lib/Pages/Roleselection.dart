@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mentor_match_app/Mentee%20Package/menteeForm.dart';
-import 'package:mentor_match_app/Mentor%20Package/mentorForm.dart';
+import 'package:mentor_match_app/Mentor%20Package/MentorRegistration/mentorForm.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ChooseRole extends StatefulWidget {

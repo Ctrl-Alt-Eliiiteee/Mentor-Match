@@ -67,10 +67,12 @@ class _LoginState extends State<Login> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(h / 40.0),
-                      child: Card(
-                        elevation: 10.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(h / 44.8)),
+                      child: Container(
+                        padding: EdgeInsets.only(top: 0, bottom: 40),
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.5),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            border: Border.all()),
                         child: Padding(
                           padding: EdgeInsets.all(h / 33.6),
                           child: Column(
