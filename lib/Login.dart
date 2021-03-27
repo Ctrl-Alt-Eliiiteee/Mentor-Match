@@ -264,14 +264,18 @@ class _LoginState extends State<Login> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          NavBar()));
+                                                          NavBar(
+                                                            select: 'Mentee',
+                                                          )));
                                             } else {
                                               print("Mentor");
                                               Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          NavBar()));
+                                                          NavBar(
+                                                            select: 'Mentor',
+                                                          )));
                                             }
                                           });
                                         });

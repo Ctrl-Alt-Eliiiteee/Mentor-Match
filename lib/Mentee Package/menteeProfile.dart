@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mentor_match_app/Login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MentorProfile extends StatefulWidget {
+class MenteeProfile extends StatefulWidget {
   @override
-  _MentorProfileState createState() => _MentorProfileState();
+  _MenteeProfileState createState() => _MenteeProfileState();
 }
 
-class _MentorProfileState extends State<MentorProfile> {
+class _MenteeProfileState extends State<MenteeProfile> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -20,98 +23,23 @@ class _MentorProfileState extends State<MentorProfile> {
               ),
               fit: BoxFit.cover)),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(height: 60),
           Center(
-            child: Container(
-                width: width - 80,
-                height: height / 3 - 30,
-                decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    border: Border.all(color: Colors.white)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: "JANUARY\n\n",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                            TextSpan(
-                                text: "Rs. 12000\n",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold))
-                          ])),
-                          CircleAvatar(
-                            backgroundColor: Colors.red,
-                            radius: 40,
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: "HOURS\n\n",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                            TextSpan(
-                                text: "12\n",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold))
-                          ])),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: "MENTEES\n\n",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                            TextSpan(
-                                text: "3\n",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold))
-                          ])),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: "SUBJECTS\n\n",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                            TextSpan(
-                                text: "7\n",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold))
-                          ])),
-                        ],
-                      ),
-                    )
-                  ],
-                )),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 30),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.red,
+                    radius: 80,
+                  ),
+                ),
+                SizedBox(height: 30),
+              ],
+            ),
           ),
           SizedBox(
             height: 50,
@@ -160,34 +88,40 @@ class _MentorProfileState extends State<MentorProfile> {
       ),
     );
   }
-}
 
-Widget _button({Icon icon, String title, int index}) {
-  return Padding(
-    padding: EdgeInsets.only(right: 20),
-    child: Row(
-      children: [
-        Expanded(
-          child: TextButton(
-            onPressed: () {},
-            child: ListTile(
-              leading: icon,
-              title: Text(
-                title,
-                style: TextStyle(
-                    color: Colors.blue[900],
-                    fontWeight: FontWeight.w300,
-                    fontSize: 25),
+  Widget _button({Icon icon, String title, int index}) {
+    return Padding(
+      padding: EdgeInsets.only(right: 20),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextButton(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await FirebaseAuth.instance.signOut();
+                prefs.setString('mentormatch_email', '');
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Login()));
+              },
+              child: ListTile(
+                leading: icon,
+                title: Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.blue[900],
+                      fontWeight: FontWeight.w300,
+                      fontSize: 25),
+                ),
               ),
             ),
           ),
-        ),
-        Icon(
-          Icons.arrow_forward_ios_sharp,
-          color: Colors.blue[900],
-          size: 20,
-        ),
-      ],
-    ),
-  );
+          Icon(
+            Icons.arrow_forward_ios_sharp,
+            color: Colors.blue[900],
+            size: 20,
+          ),
+        ],
+      ),
+    );
+  }
 }
