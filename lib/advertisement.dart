@@ -33,6 +33,10 @@ class _IntroductionState extends State<Introduction> {
           body: Stack(
             children: [
               Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset('images/Mask Group 1.png'),
+              ),
+              Align(
                   alignment: Alignment.topRight,
                   child: Padding(
                     padding: EdgeInsets.all(20.0),
@@ -54,7 +58,7 @@ class _IntroductionState extends State<Introduction> {
                   height: height / 2,
                   width: width - 50,
                   decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
+                      color: Colors.white.withOpacity(0.7),
                       border: Border.all(color: Colors.white, width: 1.5),
                       borderRadius:
                           BorderRadius.only(topRight: Radius.circular(100))),
@@ -141,6 +145,10 @@ class _IntroPage2State extends State<IntroPage2> {
           body: Stack(
             children: [
               Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset('images/Mask Group 2.png'),
+              ),
+              Align(
                   alignment: Alignment.topRight,
                   child: Padding(
                     padding: EdgeInsets.all(20.0),
@@ -162,7 +170,7 @@ class _IntroPage2State extends State<IntroPage2> {
                   height: height / 2,
                   width: width - 50,
                   decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
+                      color: Colors.white.withOpacity(0.7),
                       border: Border.all(color: Colors.white, width: 1.5),
                       borderRadius:
                           BorderRadius.only(topRight: Radius.circular(100))),
@@ -246,67 +254,78 @@ class _IntroPage3State extends State<IntroPage3> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              height: height / 2,
-              width: width - 50,
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.5),
-                  border: Border.all(color: Colors.white, width: 1.5),
-                  borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(100))),
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 25, top: 40, right: 50),
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: 'How the process works?\n\n',
-                            style: TextStyle(
-                                fontSize: 35,
-                                color: Colors.blue[900],
-                                fontWeight: FontWeight.bold)),
-                        TextSpan(
-                            text:
-                                'We hand pick the best college students and match them with your interest, hobbies and personality.',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.blue[900],
-                                fontWeight: FontWeight.w300)),
-                      ]),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 30.0, bottom: 40),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: TextButton(
-                        onPressed: () async {
-                          var prefs = await SharedPreferences.getInstance();
-                          prefs.setBool('IntroSeen', true);
-                          Navigator.pushReplacement(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  duration: Duration(milliseconds: 400),
-                                  child: Login()));
-                        },
-                        child: Text(
-                          "Next >",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.blue[900],
-                          ),
+          body: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Image.asset('images/Mask Group 3.png'),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  height: height / 2,
+                  width: width - 50,
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.7),
+                      border: Border.all(color: Colors.white, width: 1.5),
+                      borderRadius:
+                          BorderRadius.only(topRight: Radius.circular(100))),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 25, top: 40, right: 50),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: 'How the process works?\n\n',
+                                style: TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.blue[900],
+                                    fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text:
+                                    'We hand pick the best college students and match them with your interest, hobbies and personality.',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.blue[900],
+                                    fontWeight: FontWeight.w300)),
+                          ]),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                      Padding(
+                        padding: EdgeInsets.only(right: 30.0, bottom: 40),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: TextButton(
+                            onPressed: () async {
+                              var prefs = await SharedPreferences.getInstance();
+                              prefs.setBool('IntroSeen', true);
+                              Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 400),
+                                      child: Login()));
+                            },
+                            child: Text(
+                              "Next >",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.blue[900],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

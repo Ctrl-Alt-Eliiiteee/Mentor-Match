@@ -71,42 +71,50 @@ class _MentorFormState extends State<MentorForm> {
                               hint: "Last name"),
                           SizedBox(height: 15),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: 20),
+                                padding: EdgeInsets.only(left: 15),
                                 child: Container(
-                                  width: 100,
-                                  child: TextFormField(
-                                    onChanged: (value) {},
-                                    decoration: InputDecoration(
-                                        hintText: dateOfBirth,
-                                        hintStyle:
-                                            TextStyle(color: Colors.blue[900])),
-                                  ),
-                                ),
+                                    width: 100,
+                                    padding: EdgeInsets.only(top: 15),
+                                    child: Text(
+                                      dateOfBirth,
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.black),
+                                    )),
                               ),
-                              IconButton(
-                                icon: Icon(Icons.calendar_today_outlined),
-                                onPressed: () async {
-                                  DateTime picker = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime.now());
-                                  if (picker != null && picker != _dateTime) {
-                                    setState(() {
-                                      _dateTime = picker;
-                                      dateOfBirth = _dateTime.day.toString() +
-                                          '/' +
-                                          _dateTime.month.toString() +
-                                          '/' +
-                                          _dateTime.year.toString();
-                                    });
-                                  }
-                                },
+                              Padding(
+                                padding: EdgeInsets.only(right: 30),
+                                child: IconButton(
+                                  icon: Icon(Icons.calendar_today_outlined),
+                                  onPressed: () async {
+                                    DateTime picker = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime.now());
+                                    if (picker != null && picker != _dateTime) {
+                                      setState(() {
+                                        _dateTime = picker;
+                                        dateOfBirth = _dateTime.day.toString() +
+                                            '/' +
+                                            _dateTime.month.toString() +
+                                            '/' +
+                                            _dateTime.year.toString();
+                                      });
+                                    }
+                                  },
+                                ),
                               )
                             ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 15, right: 15),
+                            child: Divider(
+                              color: Colors.black45,
+                              thickness: 1,
+                            ),
                           ),
                           SizedBox(height: 15),
                           _customTextField(

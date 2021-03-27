@@ -70,9 +70,9 @@ class _LoginState extends State<Login> {
                       child: Container(
                         padding: EdgeInsets.only(top: 0, bottom: 40),
                         decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            border: Border.all()),
+                            color: Colors.white.withOpacity(0.7),
+                            borderRadius: BorderRadius.all(Radius.circular(35)),
+                            border: Border.all(color: Colors.white)),
                         child: Padding(
                           padding: EdgeInsets.all(h / 33.6),
                           child: Column(
@@ -220,12 +220,13 @@ class _LoginState extends State<Login> {
                                 height: h / 16.8,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(h / 33.6),
-                                  gradient: LinearGradient(colors: [
-                                    Colors.yellowAccent,
-                                    Colors.yellowAccent[700],
-                                  ]),
                                 ),
-                                child: TextButton(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.blue[400],
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15)))),
                                     onPressed: () async {
                                       final result =
                                           await InternetAddress.lookup(
@@ -279,9 +280,10 @@ class _LoginState extends State<Login> {
                                     child: Text(
                                       'Sign In',
                                       style: TextStyle(
+                                        fontSize: 20,
                                         fontFamily: 'Lato',
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                       ),
                                     )),
                               ),
@@ -298,7 +300,12 @@ class _LoginState extends State<Login> {
                                       Colors.yellowAccent[700],
                                     ]),
                                   ),
-                                  child: TextButton(
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.blue[400],
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15)))),
                                       onPressed: () {
                                         Navigator.push(
                                             context,
@@ -309,11 +316,12 @@ class _LoginState extends State<Login> {
                                                 child: ChooseRole()));
                                       },
                                       child: Text(
-                                        'Sign Up',
+                                        'Create new account',
                                         style: TextStyle(
+                                          fontSize: 20,
                                           fontFamily: 'Lato',
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                                          color: Colors.white,
                                         ),
                                       )),
                                 ),

@@ -58,9 +58,10 @@ class _EdDetailsState extends State<EdDetails> {
                                 padding: EdgeInsets.only(left: 15),
                                 child: Container(
                                     width: 200,
+                                    padding: EdgeInsets.only(top: 15),
                                     child: Text(degree,
                                         style: TextStyle(
-                                          color: Colors.blue[900],
+                                          color: Colors.black,
                                           fontSize: 15,
                                         ))),
                               ),
@@ -162,7 +163,7 @@ class _EdDetailsState extends State<EdDetails> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15)),
-                                        color: Colors.white.withOpacity(0.5),
+                                        color: Colors.white.withOpacity(0.7),
                                       ),
                                       child: Center(
                                         child: Icon(
@@ -215,7 +216,7 @@ class _EdDetailsState extends State<EdDetails> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15)),
-                                        color: Colors.white.withOpacity(0.5),
+                                        color: Colors.white.withOpacity(0.7),
                                       ),
                                       child: Center(
                                         child: Icon(

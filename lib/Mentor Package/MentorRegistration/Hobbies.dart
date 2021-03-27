@@ -8,23 +8,24 @@ class Hobby {
 }
 
 const List<Hobby> hobbyButtons = const <Hobby>[
-  const Hobby(image: 'images/RegistrationFormPngs/maths.png', title: 'Cars'),
-  const Hobby(image: 'images/RegistrationFormPngs/physics.png', title: 'Pets'),
   const Hobby(
-      image: 'images/RegistrationFormPngs/chemistry.png', title: 'Trivia'),
+      image: 'images/RegistrationFormPngs/Steering-wheel.png', title: 'Cars'),
+  const Hobby(image: 'images/RegistrationFormPngs/cat.png', title: 'Pets'),
+  const Hobby(image: 'images/RegistrationFormPngs/brain.png', title: 'Trivia'),
   const Hobby(
-      image: 'images/RegistrationFormPngs/physics.png', title: 'Building'),
-  const Hobby(image: 'images/RegistrationFormPngs/biology.png', title: 'Art'),
-  const Hobby(image: 'images/RegistrationFormPngs/money.png', title: 'Cooking'),
+      image: 'images/RegistrationFormPngs/wrench.png', title: 'Building'),
+  const Hobby(image: 'images/RegistrationFormPngs/canvas.png', title: 'Art'),
+  const Hobby(image: 'images/RegistrationFormPngs/food.png', title: 'Cooking'),
   const Hobby(
-      image: 'images/RegistrationFormPngs/economy.png', title: 'Travelling'),
+      image: 'images/RegistrationFormPngs/tent.png', title: 'Travelling'),
   const Hobby(
-      image: 'images/RegistrationFormPngs/accounts.png', title: 'Socializing'),
+      image: 'images/RegistrationFormPngs/party.png', title: 'Socializing'),
   const Hobby(
-      image: 'images/RegistrationFormPngs/business.png', title: 'Technology'),
-  const Hobby(image: 'images/RegistrationFormPngs/balance.png', title: 'Music'),
+      image: 'images/RegistrationFormPngs/circuit.png', title: 'Technology'),
   const Hobby(
-      image: 'images/RegistrationFormPngs/balance.png', title: 'Fitness'),
+      image: 'images/RegistrationFormPngs/lovesong.png', title: 'Music'),
+  const Hobby(
+      image: 'images/RegistrationFormPngs/gym-dumbel.png', title: 'Fitness'),
   const Hobby(image: 'images/RegistrationFormPngs/movie.png', title: 'Movies'),
   const Hobby(
       image: 'images/RegistrationFormPngs/video-game.png', title: 'Games'),
@@ -71,29 +72,37 @@ class _MentorHobbiesState extends State<MentorHobbies> {
               },
             ),
             SizedBox(height: 40),
-            // Align(
-            //   alignment: Alignment.centerLeft,
-            //   child: Text(
-            //     "Did we miss a few? \n",
-            //     style: TextStyle(
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.blue[900],
-            //         fontSize: 20),
-            //   ),
-            // ),
-            // Container(
-            //     padding: EdgeInsets.only(left: 20),
-            //     decoration: BoxDecoration(
-            //         color: Colors.white,
-            //         borderRadius: BorderRadius.all(Radius.circular(10))),
-            //     child: TextFormField(
-            //       decoration: InputDecoration(
-            //           hintStyle: TextStyle(
-            //             color: Colors.blue[900],
-            //           ),
-            //           border: InputBorder.none,
-            //           hintText: "Enter your hobbies here..."),
-            //     ))
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Did we miss a few? \n",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[900],
+                    fontSize: 20),
+              ),
+            ),
+            Container(
+                padding: EdgeInsets.only(left: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      hobbyChoices.remove(extraHobbies);
+                      extraHobbies = value;
+                      hobbyChoices.add(extraHobbies);
+                      print(hobbyChoices);
+                    });
+                  },
+                  decoration: InputDecoration(
+                      hintStyle: TextStyle(
+                        color: Colors.blue[900],
+                      ),
+                      border: InputBorder.none,
+                      hintText: "Enter your hobbies here..."),
+                ))
           ],
         ),
       ),
@@ -153,7 +162,7 @@ class _HobbyButtonsState extends State<HobbyButtons> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
                                 border: Border.all(color: Colors.white),
-                                color: Colors.white.withOpacity(0.5),
+                                color: Colors.white.withOpacity(0.7),
                               ),
                               child: Icon(
                                 Icons.check,

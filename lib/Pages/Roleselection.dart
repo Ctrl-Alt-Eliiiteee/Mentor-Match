@@ -46,10 +46,12 @@ class _ChooseRoleState extends State<ChooseRole> {
                       child: Row(
                         children: [
                           Container(
-                            width: width / 2 - 55,
-                            height: height / 3,
-                            color: Colors.red,
-                          ),
+                              width: width / 2 - 55,
+                              height: height / 3,
+                              child: Image.asset(
+                                'images/Mentee.png',
+                                fit: BoxFit.cover,
+                              )),
                           Padding(
                             padding: EdgeInsets.only(left: 40),
                             child: Column(
@@ -111,6 +113,7 @@ class _ChooseRoleState extends State<ChooseRole> {
                         border: Border.all(color: Colors.white, width: 1),
                       ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(left: 0),
@@ -162,10 +165,15 @@ class _ChooseRoleState extends State<ChooseRole> {
                             ),
                           ),
                           Container(
-                            width: width / 2 - 55,
-                            height: height / 3,
-                            color: Colors.red,
-                          ),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              width: width / 2 - 55,
+                              height: height / 3,
+                              child: Image.asset(
+                                'images/Mentor.png',
+                                fit: BoxFit.cover,
+                              )),
                         ],
                       )),
                 ],

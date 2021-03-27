@@ -126,7 +126,7 @@ class _SubjectButtonsState extends State<SubjectButtons> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15)),
                                 border: Border.all(color: Colors.white),
-                                color: Colors.white.withOpacity(0.5),
+                                color: Colors.white.withOpacity(0.7),
                               ),
                               child: Icon(
                                 Icons.check,

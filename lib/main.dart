@@ -34,9 +34,9 @@ class MentorMatch extends StatelessWidget {
       ),
       home: seen == null
           ? movingRocket()
-          : (email == '')
-              ? Login()
-              : NavBar(),
+          : (email != '')
+              ? NavBar()
+              : Login(),
     );
   }
 }
