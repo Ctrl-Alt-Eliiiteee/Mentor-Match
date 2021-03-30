@@ -129,7 +129,7 @@ class _NavBarState extends State<NavBar> {
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
                                   color: Colors.white.withOpacity(0.9),
-                                  elevation: (_index == 0) ? 3 : 0,
+                                  elevation: 3,
                                   child: Icon(
                                     Icons.home,
                                   ),
