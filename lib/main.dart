@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mentor_match_app/Pages/Navbar.dart';
 import 'Login.dart';
@@ -13,6 +12,7 @@ import 'package:device_preview/device_preview.dart';
 String acc = '';
 bool seen;
 String email;
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

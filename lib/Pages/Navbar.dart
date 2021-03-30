@@ -19,6 +19,8 @@ class NavBar extends StatefulWidget {
 int _index = 0;
 bool _floatingButtonClicked = false;
 Color _floatingColor = Colors.blue[100];
+Color _cardColor = Colors.white.withOpacity(0.9);
+double _elevation = 3;
 
 class _NavBarState extends State<NavBar> {
   @override
@@ -60,6 +62,8 @@ class _NavBarState extends State<NavBar> {
             backgroundColor: _floatingColor,
             onPressed: () {
               setState(() {
+                _cardColor = Colors.transparent;
+                _elevation = 0;
                 _floatingColor = Colors.blue[900];
                 _floatingButtonClicked = true;
               });
@@ -128,8 +132,8 @@ class _NavBarState extends State<NavBar> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
-                                  color: Colors.white.withOpacity(0.9),
-                                  elevation: 3,
+                                  color: _cardColor,
+                                  elevation: _elevation,
                                   child: Icon(
                                     Icons.home,
                                   ),
@@ -151,8 +155,8 @@ class _NavBarState extends State<NavBar> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    color: Colors.white.withOpacity(0.9),
-                                    elevation: 3,
+                                    color: _cardColor,
+                                    elevation: _elevation,
                                     child: Icon(
                                       Icons.calendar_today,
                                     ),
@@ -173,8 +177,8 @@ class _NavBarState extends State<NavBar> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    color: Colors.white.withOpacity(0.9),
-                                    elevation: 3,
+                                    color: _cardColor,
+                                    elevation: _elevation,
                                     child: Icon(
                                       Icons.phone_android,
                                     ),
@@ -195,8 +199,8 @@ class _NavBarState extends State<NavBar> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
-                                  color: Colors.white.withOpacity(0.9),
-                                  elevation: 3,
+                                  color: _cardColor,
+                                  elevation: _elevation,
                                   child: Icon(
                                     Icons.person,
                                   ),
@@ -210,6 +214,8 @@ class _NavBarState extends State<NavBar> {
                       _floatingButtonClicked = false;
                       _floatingColor = Colors.blue[100];
                       _index = value;
+                      _cardColor = Colors.white.withOpacity(0.9);
+                      _elevation = 3;
                     });
                   },
                 ),
