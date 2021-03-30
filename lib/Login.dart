@@ -18,9 +18,14 @@ String _password = '';
 bool checkboxvalue = false;
 String method = '';
 
+bool _signedIn;
+
 class _LoginState extends State<Login> {
   @override
   void initState() {
+    setState(() {
+      _signedIn = true;
+    });
     disconnect();
     // TODO: implement initState
     super.initState();
@@ -237,54 +242,75 @@ class _LoginState extends State<Login> {
                                             'Could not reach the server please connect to the internet');
                                       } else if (_email.length < 10 ||
                                           !_email.contains('@') ||
-                                          !_email.contains('.com')) {
+                                          !_email.contains('.com') ||
+                                          _password.length < 6) {
                                         showAlertDialog(context,
                                             'Please fill the details properly');
                                       } else {
-                                        await FirebaseAuth.instance
-                                            .signInWithEmailAndPassword(
-                                                email: _email,
-                                                password: _password)
-                                            .catchError((e) {
-                                          showAlertDialog(
-                                              context, "User not found");
-                                        }).then((value) async {
-                                          final prefs = await SharedPreferences
-                                              .getInstance();
-                                          prefs.setString(
-                                              'mentormatch_email', _email);
-                                          var user = await Firestore.instance
-                                              .collection('Mentee')
-                                              .doc(_email)
-                                              .get()
-                                              .then((docSnapshot) {
-                                            if (docSnapshot.exists) {
-                                              print("Mentee");
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          NavBar(
-                                                            select: 'Mentee',
-                                                          )));
-                                            } else {
-                                              print("Mentor");
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          NavBar(
-                                                            select: 'Mentor',
-                                                          )));
+                                        try {
+                                          await FirebaseAuth.instance
+                                              .signInWithEmailAndPassword(
+                                            email: _email,
+                                            password: _password,
+                                          )
+                                              .catchError((e) {
+                                            if (e.code == 'user-not-found') {
+                                              showAlertDialog(
+                                                  context, "User Not Found!");
+                                              _signedIn = false;
+                                            } else if (e.code ==
+                                                'wrong-password') {
+                                              showAlertDialog(
+                                                  context, 'User Not Found');
+                                              _signedIn = false;
+                                            }
+                                          }).then((value) async {
+                                            if (_signedIn == true) {
+                                              final prefs =
+                                                  await SharedPreferences
+                                                      .getInstance();
+                                              prefs.setString(
+                                                  'mentormatch_email', _email);
+                                              var user = await Firestore
+                                                  .instance
+                                                  .collection('Mentee')
+                                                  .doc(_email)
+                                                  .get()
+                                                  .then((docSnapshot) {
+                                                if (docSnapshot.exists) {
+                                                  print("Mentee");
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              NavBar(
+                                                                select:
+                                                                    'Mentee',
+                                                              )));
+                                                } else {
+                                                  print("Mentor");
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              NavBar(
+                                                                select:
+                                                                    'Mentor',
+                                                              )));
+                                                }
+                                              });
                                             }
                                           });
-                                        });
+                                        } catch (e) {
+                                          showAlertDialog(
+                                              context, e.toString());
+                                        }
                                       }
+                                      _signedIn = true;
                                     },
                                     child: Text(
                                       'Sign In',
                                       style: TextStyle(
-                                        fontSize: 20,
                                         fontFamily: 'Lato',
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
@@ -322,7 +348,6 @@ class _LoginState extends State<Login> {
                                       child: Text(
                                         'Create new account',
                                         style: TextStyle(
-                                          fontSize: 20,
                                           fontFamily: 'Lato',
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,

@@ -202,12 +202,14 @@ class _MentorHomeState extends State<MentorHome> {
                               end: Alignment.centerRight,
                             )),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
@@ -216,55 +218,50 @@ class _MentorHomeState extends State<MentorHome> {
                                     TextSpan(
                                         text: index[0],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: height / 50,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: RichText(
-                                      text: TextSpan(children: [
-                                    TextSpan(
-                                        text: "With\n", style: TextStyle()),
-                                    TextSpan(
-                                        text: index[1],
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ])),
-                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(text: "With\n", style: TextStyle()),
+                                  TextSpan(
+                                      text: index[1],
+                                      style: TextStyle(
+                                        fontSize: height / 50,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ])),
                               ],
-                            ),
-                            SizedBox(
-                              height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(text: "for\n", style: TextStyle()),
                                     TextSpan(
                                         text: index[2],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: height / 50,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(text: "for\n", style: TextStyle()),
                                     TextSpan(
                                         text: index[3],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: height / 50,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
@@ -315,12 +312,13 @@ class _MentorHomeState extends State<MentorHome> {
                               end: Alignment.centerRight,
                             )),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(left: 10, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
@@ -329,13 +327,13 @@ class _MentorHomeState extends State<MentorHome> {
                                     TextSpan(
                                         text: index[0],
                                         style: TextStyle(
-                                          fontSize: index[0].length / 1 + 2,
+                                          fontSize: height / 50,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(left: 10, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
@@ -343,7 +341,7 @@ class _MentorHomeState extends State<MentorHome> {
                                     TextSpan(
                                         text: index[1],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: height / 50,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
@@ -357,27 +355,27 @@ class _MentorHomeState extends State<MentorHome> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(left: 10, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(text: "for\n", style: TextStyle()),
                                     TextSpan(
                                         text: index[2],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: height / 50,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(left: 10, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(text: "for\n", style: TextStyle()),
                                     TextSpan(
                                         text: index[3],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: height / 50,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),

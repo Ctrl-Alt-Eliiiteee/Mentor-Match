@@ -5,6 +5,7 @@ import 'package:mentor_match_app/Mentee%20Package/menteeProfile.dart';
 import 'package:mentor_match_app/Mentor%20Package/MonthlyPlanner.dart';
 import 'package:mentor_match_app/Mentor%20Package/mentorHome.dart';
 import 'package:mentor_match_app/Mentor%20Package/mentorProfile.dart';
+import 'package:mentor_match_app/Pages/HomePage.dart';
 import 'package:mentor_match_app/Pages/ProfilePage.dart';
 
 class NavBar extends StatefulWidget {
@@ -16,6 +17,8 @@ class NavBar extends StatefulWidget {
 }
 
 int _index = 0;
+bool _floatingButtonClicked = false;
+Color _floatingColor = Colors.blue[100];
 
 class _NavBarState extends State<NavBar> {
   @override
@@ -33,37 +36,44 @@ class _NavBarState extends State<NavBar> {
               fit: BoxFit.cover)),
       child: SafeArea(
         child: Scaffold(
-          body: (widget.select == 'Mentor')
-              ? (_index == 0)
-                  ? MentorHome()
-                  : (_index == 1)
-                      ? Planner()
-                      : (_index == 3)
-                          ? MentorProfile()
-                          : Center(
-                              child: Text("Page no: $_index"),
-                            )
-              : (_index == 0)
-                  ? MenteeHome()
-                  : (_index == 1)
-                      ? Planner()
-                      : (_index == 3)
-                          ? MenteeProfile()
-                          : Center(child: Text("Page no: $_index")),
+          body: (_floatingButtonClicked)
+              ? Homepage()
+              : (widget.select == 'Mentor')
+                  ? (_index == 0)
+                      ? MentorHome()
+                      : (_index == 1)
+                          ? Planner()
+                          : (_index == 3)
+                              ? MentorProfile()
+                              : Center(
+                                  child: Text("Page no: $_index"),
+                                )
+                  : (_index == 0)
+                      ? MenteeHome()
+                      : (_index == 1)
+                          ? Planner()
+                          : (_index == 3)
+                              ? MenteeProfile()
+                              : Center(child: Text("Page no: $_index")),
           backgroundColor: Colors.transparent,
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.blue[100],
+            backgroundColor: _floatingColor,
             onPressed: () {
               setState(() {
-                // Navigator.push(
-                //     context, MaterialPageRoute(builder: (context) => HomePage()));
+                _floatingColor = Colors.blue[900];
+                _floatingButtonClicked = true;
               });
             },
             child: Stack(
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: Colors.blue[900]),
+                    border: Border.all(
+                      width: 2,
+                      color: (_floatingColor == Colors.blue[100])
+                          ? Colors.blue[900]
+                          : Colors.white,
+                    ),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -71,7 +81,9 @@ class _NavBarState extends State<NavBar> {
                     child: Icon(
                   Icons.more_horiz,
                   size: 40,
-                  color: Colors.blue[900],
+                  color: (_floatingColor == Colors.blue[100])
+                      ? Colors.blue[900]
+                      : Colors.white,
                 ))
               ],
             ),
@@ -82,7 +94,9 @@ class _NavBarState extends State<NavBar> {
           bottomNavigationBar: Container(
               height: 80,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25)),
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -102,6 +116,7 @@ class _NavBarState extends State<NavBar> {
                   currentIndex: _index,
                   unselectedItemColor: Colors.blue[900],
                   selectedItemColor: Colors.blue[900],
+                  elevation: 0,
                   items: [
                     BottomNavigationBarItem(
                         backgroundColor: Colors.transparent,
@@ -113,7 +128,7 @@ class _NavBarState extends State<NavBar> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
-                                  color: Colors.blue[50].withOpacity(0.7),
+                                  color: Colors.white.withOpacity(0.9),
                                   elevation: (_index == 0) ? 3 : 0,
                                   child: Icon(
                                     Icons.home,
@@ -136,7 +151,7 @@ class _NavBarState extends State<NavBar> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    color: Colors.blue[50].withOpacity(0.7),
+                                    color: Colors.white.withOpacity(0.9),
                                     elevation: 3,
                                     child: Icon(
                                       Icons.calendar_today,
@@ -158,7 +173,7 @@ class _NavBarState extends State<NavBar> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))),
-                                    color: Colors.blue[50].withOpacity(0.7),
+                                    color: Colors.white.withOpacity(0.9),
                                     elevation: 3,
                                     child: Icon(
                                       Icons.phone_android,
@@ -180,7 +195,7 @@ class _NavBarState extends State<NavBar> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(8))),
-                                  color: Colors.blue[50].withOpacity(0.7),
+                                  color: Colors.white.withOpacity(0.9),
                                   elevation: 3,
                                   child: Icon(
                                     Icons.person,
@@ -192,6 +207,8 @@ class _NavBarState extends State<NavBar> {
                   ],
                   onTap: (value) {
                     setState(() {
+                      _floatingButtonClicked = false;
+                      _floatingColor = Colors.blue[100];
                       _index = value;
                     });
                   },

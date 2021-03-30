@@ -139,7 +139,7 @@ class _SubjectButtonsState extends State<SubjectButtons> {
                   )),
             )),
         Text(
-          '\n' + widget.choice.title,
+          widget.choice.title,
           style: TextStyle(color: Colors.blue[900]),
         )
       ],

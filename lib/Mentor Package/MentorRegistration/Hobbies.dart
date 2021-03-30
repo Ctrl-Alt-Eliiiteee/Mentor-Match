@@ -30,8 +30,7 @@ const List<Hobby> hobbyButtons = const <Hobby>[
   const Hobby(
       image: 'images/RegistrationFormPngs/video-game.png', title: 'Games'),
   const Hobby(image: 'images/RegistrationFormPngs/soccer.png', title: 'Sports'),
-  const Hobby(
-      image: 'images/RegistrationFormPngs/man.png', title: 'Reading/Writing'),
+  const Hobby(image: 'images/RegistrationFormPngs/man.png', title: 'Reading'),
 ];
 
 class MentorHobbies extends StatefulWidget {
@@ -175,7 +174,7 @@ class _HobbyButtonsState extends State<HobbyButtons> {
                   )),
             )),
         Text(
-          '\n' + widget.choice.title,
+          widget.choice.title,
           style: TextStyle(color: Colors.blue[900]),
         )
       ],

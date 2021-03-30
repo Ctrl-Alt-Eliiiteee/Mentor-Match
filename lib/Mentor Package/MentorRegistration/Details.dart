@@ -60,32 +60,35 @@ class _MentorDetailsState extends State<MentorDetails> {
               fit: BoxFit.cover)),
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back_ios_outlined)),
-              iconTheme: IconThemeData(color: Colors.blue[900]),
-              flexibleSpace: (_index == 0)
-                  ? Padding(
-                      padding: EdgeInsets.only(left: 60, right: 50, top: 15),
-                      child: RichText(
-                          text: TextSpan(
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.blue[900],
-                                  fontWeight: FontWeight.w500),
-                              text:
-                                  "Before we begin the training process, we\'d like to know you more ;)")),
-                    )
-                  : Container()),
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Column(
               children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0, right: 30),
+                  child: (_index == 0)
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              Icons.arrow_back_ios_outlined,
+                              color: Colors.blue[900],
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 8.0),
+                                child: RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(color: Colors.blue[900]),
+                                      text:
+                                          "Before we begin the training process, we\'d like to know you more ;)"),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                ),
                 pages[_index],
                 Padding(
                   padding: EdgeInsets.all(10.0),

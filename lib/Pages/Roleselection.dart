@@ -60,7 +60,7 @@ class _ChooseRoleState extends State<ChooseRole> {
                                   padding: EdgeInsets.only(left: 35, top: 20),
                                   child: Text("Mentee",
                                       style: TextStyle(
-                                          fontSize: 50,
+                                          fontSize: width / 10,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blue[900])),
                                 ),
@@ -70,7 +70,7 @@ class _ChooseRoleState extends State<ChooseRole> {
                                   child: Text(
                                       "A School Student \n who never has to\nstudy alone again",
                                       style: TextStyle(
-                                          fontSize: 25,
+                                          fontSize: width / 22,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.blue[900])),
                                 ),
@@ -123,7 +123,7 @@ class _ChooseRoleState extends State<ChooseRole> {
                                   padding: EdgeInsets.only(left: 0, top: 20),
                                   child: Text("Mentor",
                                       style: TextStyle(
-                                          fontSize: 50,
+                                          fontSize: width / 10,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blue[900])),
                                 ),
@@ -133,7 +133,7 @@ class _ChooseRoleState extends State<ChooseRole> {
                                   child: Text(
                                       "A College Student \nwho is trained to \nbe a study buddy!",
                                       style: TextStyle(
-                                          fontSize: 25,
+                                          fontSize: width / 22,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.blue[900])),
                                 ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mentor_match_app/Pages/Navbar.dart';
 import 'Login.dart';
@@ -7,6 +8,7 @@ import 'advertisement.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:device_preview/device_preview.dart';
 
 String acc = '';
 bool seen;
@@ -22,13 +24,17 @@ Future main() async {
       ? print("Has not seen intropages")
       : print("Has seen intropages");
   print(email);
-  runApp(MentorMatch());
+  runApp(
+    MentorMatch(),
+  );
 }
 
 class MentorMatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //locale: DevicePreview.locale(context),
+      //builder: DevicePreview.appBuilder,
       theme: ThemeData(
         textSelectionHandleColor: Colors.transparent,
       ),

@@ -77,7 +77,7 @@ class _EdDetailsState extends State<EdDetails> {
                                         context: context,
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime(1900),
-                                        lastDate: DateTime.now());
+                                        lastDate: DateTime(2100));
                                     if (picker != null && picker != _dateTime) {
                                       setState(() {
                                         _dateTime = picker;

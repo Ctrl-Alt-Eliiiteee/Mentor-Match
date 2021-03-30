@@ -26,9 +26,7 @@ dependencies:
   page_transition: ^1.1.7+5
   shared_preferences: 
   animated_text_kit: ^2.5.4
-  liquid_swipe: ^1.5.0
   delayed_display: ^1.1.0
-  flutter_login: ^1.0.14
   flutter_icons: ^1.1.0
   flare_flutter: ^2.0.6
   animator: ^2.0.2
@@ -52,6 +50,7 @@ dependencies:
   chewie: ^0.12.1+1
   video_player: ^1.0.1
   table_calendar: ^2.3.3
+  device_preview:
 
 dev_dependencies:
   flutter_test:

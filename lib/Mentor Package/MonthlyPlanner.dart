@@ -143,6 +143,24 @@ class _PlannerState extends State<Planner> {
   }
 }
 
+class SelectSubjects {
+  final String name;
+  final Color buttonColor;
+
+  SelectSubjects(this.name, this.buttonColor);
+}
+
+List<SelectSubjects> _subjectSeletion = <SelectSubjects>[
+  SelectSubjects('English', Colors.amber),
+  SelectSubjects('Maths', Colors.green[200]),
+  SelectSubjects('Chemistry', Colors.purple),
+  SelectSubjects('Physics', Colors.pink),
+  SelectSubjects('Biology', Colors.blue),
+  SelectSubjects('BST', Colors.pink[200]),
+];
+
+String _subjectSeletecForSession;
+
 class CreateNewSession extends StatefulWidget {
   @override
   _CreateNewSessionState createState() => _CreateNewSessionState();
@@ -201,208 +219,19 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                   SizedBox(
                     height: 40,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Colors.amber,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (_subjectSelected != 0)
-                              _subjectSelected = 0;
-                            else
-                              _subjectSelected = -1;
-                          });
-                        },
-                        child: Container(
-                          width: 80,
-                          height: 60,
-                          child: Center(
-                              child: (_subjectSelected == 0)
-                                  ? Stack(
-                                      children: [
-                                        Center(child: Icon(Icons.check)),
-                                        Center(
-                                          child: Text('English',
-                                              style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.3))),
-                                        )
-                                      ],
-                                    )
-                                  : Text('English')),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Colors.green[200],
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (_subjectSelected != 1)
-                              _subjectSelected = 1;
-                            else
-                              _subjectSelected = -1;
-                          });
-                        },
-                        child: Container(
-                          width: 80,
-                          height: 60,
-                          child: Center(
-                              child: (_subjectSelected == 1)
-                                  ? Stack(
-                                      children: [
-                                        Center(child: Icon(Icons.check)),
-                                        Center(
-                                          child: Text('Maths',
-                                              style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.3))),
-                                        )
-                                      ],
-                                    )
-                                  : Text('Maths')),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Colors.purple[200],
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (_subjectSelected != 2)
-                              _subjectSelected = 2;
-                            else
-                              _subjectSelected = -1;
-                          });
-                        },
-                        child: Container(
-                          width: 80,
-                          height: 60,
-                          child: Center(
-                              child: (_subjectSelected == 2)
-                                  ? Stack(
-                                      children: [
-                                        Center(child: Icon(Icons.check)),
-                                        Center(
-                                          child: Text('Chemistry',
-                                              style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.3))),
-                                        )
-                                      ],
-                                    )
-                                  : Text('Chemistry')),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Colors.pink[200],
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (_subjectSelected != 3)
-                              _subjectSelected = 3;
-                            else
-                              _subjectSelected = -1;
-                          });
-                        },
-                        child: Container(
-                          width: 80,
-                          height: 60,
-                          child: Center(
-                              child: (_subjectSelected == 3)
-                                  ? Stack(
-                                      children: [
-                                        Center(child: Icon(Icons.check)),
-                                        Center(
-                                          child: Text('Physics',
-                                              style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.3))),
-                                        )
-                                      ],
-                                    )
-                                  : Text('Physics')),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Colors.blue[200],
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (_subjectSelected != 4)
-                              _subjectSelected = 4;
-                            else
-                              _subjectSelected = -1;
-                          });
-                        },
-                        child: Container(
-                          width: 80,
-                          height: 60,
-                          child: Center(
-                              child: (_subjectSelected == 4)
-                                  ? Stack(
-                                      children: [
-                                        Center(child: Icon(Icons.check)),
-                                        Center(
-                                          child: Text('Biology',
-                                              style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.3))),
-                                        )
-                                      ],
-                                    )
-                                  : Text('Biology')),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Colors.red[200],
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (_subjectSelected != 5)
-                              _subjectSelected = 5;
-                            else
-                              _subjectSelected = -1;
-                          });
-                        },
-                        child: Container(
-                          width: 80,
-                          height: 60,
-                          child: Center(
-                              child: (_subjectSelected == 5)
-                                  ? Stack(
-                                      children: [
-                                        Center(child: Icon(Icons.check)),
-                                        Center(
-                                          child: Text('BST',
-                                              style: TextStyle(
-                                                  color: Colors.white
-                                                      .withOpacity(0.3))),
-                                        )
-                                      ],
-                                    )
-                                  : Text('BST')),
-                        ),
-                      ),
-                    ],
+                  GridView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(0),
+                    itemCount: _subjectSeletion.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return SubjectButton(_subjectSeletion[index]);
+                    },
                   ),
                   SizedBox(height: 30),
                   Text(
@@ -559,5 +388,32 @@ class _CreateNewSessionState extends State<CreateNewSession> {
         ),
       ),
     );
+  }
+
+  Widget SubjectButton(final SelectSubjects choice) {
+    return TextButton(
+        onPressed: () {
+          setState(() {
+            _subjectSeletecForSession = choice.name;
+            print(_subjectSeletecForSession);
+          });
+        },
+        style: TextButton.styleFrom(
+            backgroundColor: choice.buttonColor, primary: Colors.white),
+        child: (choice.name == _subjectSeletecForSession)
+            ? Stack(
+                children: [
+                  Center(
+                    child: Icon(Icons.check),
+                  ),
+                  Center(
+                    child: Text(
+                      choice.name,
+                      style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                    ),
+                  ),
+                ],
+              )
+            : Text(choice.name));
   }
 }
