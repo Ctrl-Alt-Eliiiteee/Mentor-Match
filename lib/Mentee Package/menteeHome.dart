@@ -5,7 +5,8 @@ String name = 'Soham Sakaria';
 
 List<List<String>> upcomingStudents = [
   ['Eeshan Dutta', 'Trigonometry', '2 Hours', '10th Feb'],
-  ['Parth Pandey', 'Trigonometry', '2 Hours', '10th Feb']
+  ['Parth Pandey', 'Trigonometry', '2 Hours', '10th Feb'],
+  ['Parth Srivastava', 'Trigonometry', '2 Hours', '10th Feb']
 ];
 
 List<List<String>> doneStudents = [

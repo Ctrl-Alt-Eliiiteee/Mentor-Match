@@ -52,11 +52,9 @@ class _NavBarState extends State<NavBar> {
                                 )
                   : (_index == 0)
                       ? MenteeHome()
-                      : (_index == 1)
-                          ? Planner()
-                          : (_index == 3)
-                              ? MenteeProfile()
-                              : Center(child: Text("Page no: $_index")),
+                      : (_index == 3)
+                          ? MenteeProfile()
+                          : Center(child: Text("Page no: $_index")),
           backgroundColor: Colors.transparent,
           floatingActionButton: FloatingActionButton(
             backgroundColor: _floatingColor,

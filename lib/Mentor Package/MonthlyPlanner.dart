@@ -373,7 +373,9 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)))),
-                      onPressed: () {},
+                      onPressed: () {
+                        /////////////////////CREATE SESSION CODE////////////////////////////
+                      },
                       child: Container(
                         width: 140,
                         height: 60,

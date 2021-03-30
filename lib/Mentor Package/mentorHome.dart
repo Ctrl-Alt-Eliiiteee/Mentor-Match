@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 String name = 'Soham Sakaria';
-
+// Refer this
+// NAME, Subject, Time, Date
 List<List<String>> upcomingStudents = [
   ['Eeshan Dutta', 'Trigonometry', '2 Hours', '10th Feb'],
-  ['Parth Pandey', 'Trigonometry', '2 Hours', '10th Feb']
+  ['Parth Pandey', 'Trigonometry', '2 Hours', '10th Feb'],
+  ['Parth Srivastava', 'Trigonometry', '2 Hours', '10th Feb'],
 ];
 
 List<List<String>> doneStudents = [
