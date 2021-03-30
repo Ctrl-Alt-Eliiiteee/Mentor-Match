@@ -77,7 +77,7 @@ class _MentorHomeState extends State<MentorHome> {
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Container(
                 width: width - 40,
-                height: height * 0.18,
+                height: height * 0.2,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     gradient: LinearGradient(

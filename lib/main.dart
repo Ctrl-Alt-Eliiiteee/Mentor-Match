@@ -32,9 +32,12 @@ Future main() async {
 class MentorMatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return //DevicePreview(
+        // enabled: !kReleaseMode,
+        // builder: (context) =>
+        MaterialApp(
       //locale: DevicePreview.locale(context),
-      //builder: DevicePreview.appBuilder,
+      builder: DevicePreview.appBuilder,
       theme: ThemeData(
         textSelectionHandleColor: Colors.transparent,
       ),
@@ -43,6 +46,7 @@ class MentorMatch extends StatelessWidget {
           : (email != '')
               ? NavBar()
               : Login(),
+      //)
     );
   }
 }
@@ -60,7 +64,6 @@ class _movingRocketState extends State<movingRocket> {
   @override
   void dispose() {
     _controller.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 

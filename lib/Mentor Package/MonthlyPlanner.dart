@@ -227,7 +227,7 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
-                      mainAxisSpacing: 8,
+                      mainAxisSpacing: 10,
                     ),
                     itemBuilder: (BuildContext context, int index) {
                       return SubjectButton(_subjectSeletion[index]);
@@ -380,7 +380,8 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                         child: Center(child: Text("Create Session")),
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 30),
                 ],
               ),
             ),
@@ -409,11 +410,20 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                   Center(
                     child: Text(
                       choice.name,
-                      style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white.withOpacity(0.3),
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
               )
-            : Text(choice.name));
+            : Text(
+                choice.name,
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ));
   }
 }

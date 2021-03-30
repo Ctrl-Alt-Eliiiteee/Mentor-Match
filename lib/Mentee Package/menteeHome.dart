@@ -41,7 +41,7 @@ class _MenteeHomeState extends State<MenteeHome> {
                 TextSpan(
                     text: "$name\n",
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: width * 0.07,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue[900])),
               ])),
@@ -51,7 +51,7 @@ class _MenteeHomeState extends State<MenteeHome> {
               child: IconButton(
                 icon: Icon(
                   Icons.message,
-                  size: 30,
+                  size: width * 0.08,
                   color: Colors.blue[900],
                 ),
                 onPressed: () {},
@@ -63,7 +63,7 @@ class _MenteeHomeState extends State<MenteeHome> {
           padding: EdgeInsets.only(left: 20.0),
           child: Text("Current Session",
               style: TextStyle(
-                  fontSize: 30,
+                  fontSize: width * 0.07,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue[900])),
         ),
@@ -77,7 +77,7 @@ class _MenteeHomeState extends State<MenteeHome> {
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Container(
                 width: width - 40,
-                height: height / 5,
+                height: height * 0.18,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     gradient: LinearGradient(
@@ -99,7 +99,7 @@ class _MenteeHomeState extends State<MenteeHome> {
                             TextSpan(
                                 text: upcomingStudents[0][0],
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: width * 0.05,
                                   fontWeight: FontWeight.bold,
                                 )),
                           ])),
@@ -112,15 +112,12 @@ class _MenteeHomeState extends State<MenteeHome> {
                             TextSpan(
                                 text: upcomingStudents[0][1],
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: width * 0.05,
                                   fontWeight: FontWeight.bold,
                                 )),
                           ])),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +130,7 @@ class _MenteeHomeState extends State<MenteeHome> {
                             TextSpan(
                                 text: upcomingStudents[0][2],
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: width * 0.05,
                                   fontWeight: FontWeight.bold,
                                 )),
                           ])),
@@ -141,14 +138,16 @@ class _MenteeHomeState extends State<MenteeHome> {
                         Padding(
                           padding: EdgeInsets.all(10),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              print(width.toString() + ' ' + height.toString());
+                            },
                             child: Container(
                               height: 55,
                               width: width / 2 - 80,
                               child: Center(
                                 child: Text("START SESSION",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: width * 0.05,
                                         color: Colors.blue[900],
                                         fontWeight: FontWeight.w400)),
                               ),
@@ -170,17 +169,17 @@ class _MenteeHomeState extends State<MenteeHome> {
           padding: EdgeInsets.only(left: 20.0, top: 20),
           child: Text("Upcoming Sessions",
               style: TextStyle(
-                  fontSize: 30,
+                  fontSize: width * 0.07,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue[900])),
         ),
         SizedBox(
-          height: 15,
+          height: width * 0.02,
         ),
         Expanded(
           child: CarouselSlider(
             options: CarouselOptions(
-              height: height / 5,
+              height: height * 0.17,
               enlargeCenterPage: false,
               enableInfiniteScroll: false,
             ),
@@ -193,7 +192,7 @@ class _MenteeHomeState extends State<MenteeHome> {
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Container(
                         width: width - 40,
-                        height: height / 4,
+                        //height: height / 4,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             gradient: LinearGradient(
@@ -202,12 +201,14 @@ class _MenteeHomeState extends State<MenteeHome> {
                               end: Alignment.centerRight,
                             )),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
@@ -216,55 +217,51 @@ class _MenteeHomeState extends State<MenteeHome> {
                                     TextSpan(
                                         text: index[0],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: width * 0.05,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: RichText(
-                                      text: TextSpan(children: [
-                                    TextSpan(
-                                        text: "With\n", style: TextStyle()),
-                                    TextSpan(
-                                        text: index[1],
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ])),
-                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(text: "With\n", style: TextStyle()),
+                                  TextSpan(
+                                      text: index[1],
+                                      style: TextStyle(
+                                        fontSize: width * 0.05,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ])),
                               ],
-                            ),
-                            SizedBox(
-                              height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
-                                    TextSpan(text: "for\n", style: TextStyle()),
+                                    TextSpan(
+                                        text: "for \n", style: TextStyle()),
                                     TextSpan(
                                         text: index[2],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: width * 0.05,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(text: "for\n", style: TextStyle()),
                                     TextSpan(
                                         text: index[3],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: width * 0.05,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
@@ -283,17 +280,17 @@ class _MenteeHomeState extends State<MenteeHome> {
           padding: EdgeInsets.only(left: 20.0, top: 20),
           child: Text("Session History",
               style: TextStyle(
-                  fontSize: 30,
+                  fontSize: width * 0.07,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue[900])),
         ),
         SizedBox(
-          height: 15,
+          height: width * 0.02,
         ),
         Expanded(
           child: CarouselSlider(
             options: CarouselOptions(
-              height: height / 5,
+              height: height * 0.17,
               enlargeCenterPage: false,
               enableInfiniteScroll: false,
             ),
@@ -306,7 +303,7 @@ class _MenteeHomeState extends State<MenteeHome> {
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Container(
                         width: width - 40,
-                        height: height / 4,
+                        //height: height / 4,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             gradient: LinearGradient(
@@ -315,12 +312,14 @@ class _MenteeHomeState extends State<MenteeHome> {
                               end: Alignment.centerRight,
                             )),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
@@ -329,55 +328,51 @@ class _MenteeHomeState extends State<MenteeHome> {
                                     TextSpan(
                                         text: index[0],
                                         style: TextStyle(
-                                          fontSize: index[0].length / 1 + 2,
+                                          fontSize: width * 0.05,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: RichText(
-                                      text: TextSpan(children: [
-                                    TextSpan(
-                                        text: "With\n", style: TextStyle()),
-                                    TextSpan(
-                                        text: index[1],
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ])),
-                                ),
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(text: "With\n", style: TextStyle()),
+                                  TextSpan(
+                                      text: index[1],
+                                      style: TextStyle(
+                                        fontSize: width * 0.05,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ])),
                               ],
-                            ),
-                            SizedBox(
-                              height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
-                                    TextSpan(text: "for\n", style: TextStyle()),
+                                    TextSpan(
+                                        text: "for \n", style: TextStyle()),
                                     TextSpan(
                                         text: index[2],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: width * 0.05,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.only(
+                                      left: 10, top: 5, right: 20),
                                   child: RichText(
                                       text: TextSpan(children: [
                                     TextSpan(text: "for\n", style: TextStyle()),
                                     TextSpan(
                                         text: index[3],
                                         style: TextStyle(
-                                          fontSize: 22,
+                                          fontSize: width * 0.05,
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ])),
