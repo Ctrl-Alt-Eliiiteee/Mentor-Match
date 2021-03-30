@@ -53,27 +53,28 @@ class _ChooseRoleState extends State<ChooseRole> {
                                 fit: BoxFit.cover,
                               )),
                           Padding(
-                            padding: EdgeInsets.only(left: 40),
+                            padding: EdgeInsets.only(left: 20, right: 10),
                             child: Column(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(left: 35, top: 20),
                                   child: Text("Mentee",
                                       style: TextStyle(
-                                          fontSize: width / 10,
+                                          fontSize: width * 0.12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blue[900])),
                                 ),
                                 SizedBox(height: 20),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 15, top: 0),
-                                  child: Text(
-                                      "A School Student \n who never has to\nstudy alone again",
-                                      style: TextStyle(
-                                          fontSize: width / 22,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.blue[900])),
-                                ),
+                                    padding: EdgeInsets.only(left: 15, top: 0),
+                                    child: RichText(
+                                        text: TextSpan(
+                                            text:
+                                                "A School Student \n who never has to \nstudy alone again",
+                                            style: TextStyle(
+                                                color: Colors.blue[900],
+                                                fontSize: 0.05 * width,
+                                                fontWeight: FontWeight.w400)))),
                                 SizedBox(height: 30),
                                 ElevatedButton(
                                     onPressed: () {
@@ -90,12 +91,12 @@ class _ChooseRoleState extends State<ChooseRole> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10)))),
                                     child: Container(
-                                        width: 130,
+                                        width: width / 2 - 50,
                                         height: 50,
                                         child: Center(
                                             child: Text("BECOME A MENTEE",
                                                 style: TextStyle(
-                                                    fontSize: 15,
+                                                    fontSize: width * 0.04,
                                                     fontWeight: FontWeight.w300,
                                                     letterSpacing: 1.2)))))
                               ],
@@ -123,20 +124,21 @@ class _ChooseRoleState extends State<ChooseRole> {
                                   padding: EdgeInsets.only(left: 0, top: 20),
                                   child: Text("Mentor",
                                       style: TextStyle(
-                                          fontSize: width / 10,
+                                          fontSize: width * 0.12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blue[900])),
                                 ),
                                 SizedBox(height: 20),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 20, top: 0),
-                                  child: Text(
-                                      "A College Student \nwho is trained to \nbe a study buddy!",
-                                      style: TextStyle(
-                                          fontSize: width / 22,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.blue[900])),
-                                ),
+                                    padding: EdgeInsets.only(left: 20, top: 0),
+                                    child: RichText(
+                                        text: TextSpan(
+                                            text:
+                                                "A College Student \nwho is trained to \nbe astudy buddy!",
+                                            style: TextStyle(
+                                                color: Colors.blue[900],
+                                                fontSize: 0.05 * width,
+                                                fontWeight: FontWeight.w400)))),
                                 SizedBox(height: 30),
                                 ElevatedButton(
                                     onPressed: () {
