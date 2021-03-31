@@ -5,6 +5,7 @@ import 'package:mentor_match_app/Mentee%20Package/menteeProfile.dart';
 import 'package:mentor_match_app/Mentor%20Package/MonthlyPlanner.dart';
 import 'package:mentor_match_app/Mentor%20Package/mentorHome.dart';
 import 'package:mentor_match_app/Mentor%20Package/mentorProfile.dart';
+import 'package:mentor_match_app/Pages/FliptoFocus.dart';
 import 'package:mentor_match_app/Pages/HomePage.dart';
 import 'package:mentor_match_app/Pages/ProfilePage.dart';
 
@@ -45,16 +46,20 @@ class _NavBarState extends State<NavBar> {
                       ? MentorHome()
                       : (_index == 1)
                           ? Planner()
-                          : (_index == 3)
-                              ? MentorProfile()
-                              : Center(
-                                  child: Text("Page no: $_index"),
-                                )
+                          : (_index == 2)
+                              ? Fliptofocus()
+                              : (_index == 3)
+                                  ? MentorProfile()
+                                  : Center(
+                                      child: Text("Page no: $_index"),
+                                    )
                   : (_index == 0)
                       ? MenteeHome()
-                      : (_index == 3)
-                          ? MenteeProfile()
-                          : Center(child: Text("Page no: $_index")),
+                      : (_index == 2)
+                          ? Fliptofocus()
+                          : (_index == 3)
+                              ? MenteeProfile()
+                              : Center(child: Text("Page no: $_index")),
           backgroundColor: Colors.transparent,
           floatingActionButton: FloatingActionButton(
             backgroundColor: _floatingColor,

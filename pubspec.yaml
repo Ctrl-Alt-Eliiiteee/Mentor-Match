@@ -51,6 +51,8 @@ dependencies:
   video_player: ^1.0.1
   table_calendar: ^2.3.3
   device_preview:
+  circular_countdown_timer:
+  all_sensors:
 
 dev_dependencies:
   flutter_test:
