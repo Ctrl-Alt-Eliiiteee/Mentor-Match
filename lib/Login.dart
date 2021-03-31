@@ -13,8 +13,8 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-String _email = '';
-String _password = '';
+String Email = '';
+String Password = '';
 bool checkboxvalue = false;
 String method = '';
 
@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                                     ),
                                     TextField(
                                       onChanged: (text) {
-                                        _email = text;
+                                        Email = text;
                                       },
                                       keyboardType: TextInputType.emailAddress,
                                       textCapitalization:
@@ -139,7 +139,7 @@ class _LoginState extends State<Login> {
                                     ),
                                     TextField(
                                       onChanged: (text) {
-                                        _password = text;
+                                        Password = text;
                                       },
                                       obscureText: true,
                                       decoration: InputDecoration(
@@ -240,20 +240,19 @@ class _LoginState extends State<Login> {
                                           result[0].rawAddress.isEmpty) {
                                         showAlertDialog(context,
                                             'Could not reach the server please connect to the internet');
-                                      } else if (_email.length < 10 ||
-                                          !_email.contains('@') ||
-                                          !_email.contains('.com') ||
-                                          _password.length < 6) {
+                                      } else if (Email.length < 10 ||
+                                          !Email.contains('@') ||
+                                          !Email.contains('.com') ||
+                                          Password.length < 6) {
                                         showAlertDialog(context,
                                             'Please fill the details properly');
                                       } else {
                                         try {
                                           await FirebaseAuth.instance
                                               .signInWithEmailAndPassword(
-                                            email: _email,
-                                            password: _password,
-                                          )
-                                              .catchError((e) {
+                                            email: Email,
+                                            password: Password,
+                                          ).catchError((e) {
                                             if (e.code == 'user-not-found') {
                                               showAlertDialog(
                                                   context, "User Not Found!");
@@ -270,11 +269,11 @@ class _LoginState extends State<Login> {
                                                   await SharedPreferences
                                                       .getInstance();
                                               prefs.setString(
-                                                  'mentormatch_email', _email);
+                                                  'mentormatch_email', Email);
                                               var user = await Firestore
                                                   .instance
                                                   .collection('Mentee')
-                                                  .doc(_email)
+                                                  .doc(Email)
                                                   .get()
                                                   .then((docSnapshot) {
                                                 if (docSnapshot.exists) {

@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../Login.dart';
+String NameofMentee="",Description="";
 class Planner extends StatefulWidget {
   @override
   _PlannerState createState() => _PlannerState();
 }
-
+String duration ="";
 List<String> months = [
   'January',
   'February',
@@ -21,8 +24,8 @@ List<String> months = [
   'December',
 ];
 DateTime _dateTime = DateTime.now();
-TimeOfDay _timeOfDay = TimeOfDay.now();
-TimeOfDay _timeOfDay1 = TimeOfDay.now();
+TimeOfDay _timeOfDay = TimeOfDay.now();//start time
+TimeOfDay _timeOfDay1 = TimeOfDay.now();//endtime
 
 String _startTime = TimeOfDay.now().toString();
 String _endTime = TimeOfDay.now().toString();
@@ -159,7 +162,7 @@ List<SelectSubjects> _subjectSeletion = <SelectSubjects>[
   SelectSubjects('BST', Colors.pink[200]),
 ];
 
-String _subjectSeletecForSession;
+String _subjectSeletecForSession;//TO DO
 
 class CreateNewSession extends StatefulWidget {
   @override
@@ -206,6 +209,10 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                     style: TextStyle(color: Colors.blue[900]),
                   ),
                   TextFormField(
+                    //TO DO name of mentee
+                    onChanged: (text) {
+                     NameofMentee = text;
+                    },
                     decoration: InputDecoration(
                       fillColor: Colors.blue[900],
                       focusColor: Colors.blue[900],
@@ -358,6 +365,10 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                     style: TextStyle(color: Colors.blue[900]),
                   ),
                   TextFormField(
+                    // TO DO description
+                    onChanged: (text) {
+                      Description = text;
+                    },
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
@@ -374,7 +385,18 @@ class _CreateNewSessionState extends State<CreateNewSession> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)))),
                       onPressed: () {
+                        int value = _dateTime.day.toInt() + (_dateTime.month.toInt()-1)*30;
+                        double initialtime = _timeOfDay.hour.toDouble()+(_timeOfDay.minute.toDouble() / 60);
+                        double finaltime = _timeOfDay1.hour.toDouble() + (_timeOfDay1.minute.toDouble() / 60);
                         /////////////////////CREATE SESSION CODE////////////////////////////
+                        FirebaseFirestore.instance.collection("SessionDetails").doc(Email).collection("UniqueDetails").doc(NameofMentee).set({
+                          'Name': NameofMentee,
+                          'Description' : Description,
+                          'Subselected' : _subjectSeletecForSession,
+                          'Duration' :  (finaltime-initialtime).toInt().toString(),
+                            'CompValue': value,
+                          'SessionDate' : _sessionDate,
+                        });
                       },
                       child: Container(
                         width: 140,
