@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mentor_match_app/Pages/ChatWait.dart';
+import '../Login.dart';
+import 'helperfuntionmentor.dart';
 
-String name = 'Soham Sakaria';
+String name = Email;
 // Refer this
 // NAME, Subject, Time, Date
 List<List<String>> upcomingStudents = [
@@ -15,12 +19,39 @@ List<List<String>> doneStudents = [
   ['Parth Srivastava', 'Trigonometry', '2 Hours', '10th Feb']
 ];
 
+List<String> currentSession = ['Eeshan', 'Trigo', '2hours'];
+
 class MentorHome extends StatefulWidget {
   @override
   _MentorHomeState createState() => _MentorHomeState();
 }
 
 class _MentorHomeState extends State<MentorHome> {
+  void initState() {
+    super.initState();
+    _getDetails();
+  }
+
+  void _getDetails() async {
+    upcomingStudents = await Somefuntionsmentor.studentssessionlistupcoming();
+    doneStudents = await Somefuntionsmentor.studentssessionlistprevious();
+    currentSession = await Somefuntionsmentor.currentsession();
+    if (doneStudents == null) {
+      doneStudents = [
+        ['']
+      ];
+    }
+    if (upcomingStudents == null) {
+      upcomingStudents = [
+        ['']
+      ];
+    }
+    if (currentSession == null) {
+      currentSession = [''];
+    }
+    print(upcomingStudents.toString() + ' + ' + doneStudents.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -56,7 +87,10 @@ class _MentorHomeState extends State<MentorHome> {
                   size: width * 0.08,
                   color: Colors.blue[900],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WaitChat()));
+                },
               ),
             )
           ],
@@ -99,7 +133,9 @@ class _MentorHomeState extends State<MentorHome> {
                             TextSpan(
                                 text: "You need to help\n", style: TextStyle()),
                             TextSpan(
-                                text: upcomingStudents[0][0],
+                                text: currentSession[0] == null
+                                    ? ''
+                                    : currentSession[0],
                                 style: TextStyle(
                                   fontSize: width * 0.05,
                                   fontWeight: FontWeight.bold,
@@ -112,7 +148,9 @@ class _MentorHomeState extends State<MentorHome> {
                               text: TextSpan(children: [
                             TextSpan(text: "With\n", style: TextStyle()),
                             TextSpan(
-                                text: upcomingStudents[0][1],
+                                text: currentSession[1] == null
+                                    ? ''
+                                    : currentSession[1],
                                 style: TextStyle(
                                   fontSize: width * 0.05,
                                   fontWeight: FontWeight.bold,
@@ -133,7 +171,9 @@ class _MentorHomeState extends State<MentorHome> {
                               text: TextSpan(children: [
                             TextSpan(text: "for\n", style: TextStyle()),
                             TextSpan(
-                                text: upcomingStudents[0][2],
+                                text: currentSession[2] == null
+                                    ? ''
+                                    : currentSession[2],
                                 style: TextStyle(
                                   fontSize: width * 0.05,
                                   fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:mentor_match_app/Pages/ChatWait.dart';
 
 String name = 'Soham Sakaria';
 
@@ -55,7 +56,10 @@ class _MenteeHomeState extends State<MenteeHome> {
                   size: width * 0.08,
                   color: Colors.blue[900],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WaitChat()));
+                },
               ),
             )
           ],
