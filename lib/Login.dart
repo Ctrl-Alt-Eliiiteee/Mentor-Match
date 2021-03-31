@@ -252,7 +252,8 @@ class _LoginState extends State<Login> {
                                               .signInWithEmailAndPassword(
                                             email: Email,
                                             password: Password,
-                                          ).catchError((e) {
+                                          )
+                                              .catchError((e) {
                                             if (e.code == 'user-not-found') {
                                               showAlertDialog(
                                                   context, "User Not Found!");
@@ -278,6 +279,9 @@ class _LoginState extends State<Login> {
                                                   .then((docSnapshot) {
                                                 if (docSnapshot.exists) {
                                                   print("Mentee");
+                                                  prefs.setString(
+                                                      'Mentor/Mentee',
+                                                      'Mentee');
                                                   Navigator.pushReplacement(
                                                       context,
                                                       MaterialPageRoute(
@@ -288,6 +292,9 @@ class _LoginState extends State<Login> {
                                                               )));
                                                 } else {
                                                   print("Mentor");
+                                                  prefs.setString(
+                                                      'Mentor/Mentee',
+                                                      'Mentor');
                                                   Navigator.pushReplacement(
                                                       context,
                                                       MaterialPageRoute(

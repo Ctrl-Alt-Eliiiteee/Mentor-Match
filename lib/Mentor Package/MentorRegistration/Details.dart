@@ -8,6 +8,7 @@ import 'package:mentor_match_app/Mentor%20Package/MentorRegistration/Hobbies.dar
 import 'package:mentor_match_app/Mentor%20Package/MentorRegistration/Subjects.dart';
 import 'package:mentor_match_app/Mentor%20Package/MentorRegistration/TwoChoices.dart';
 import 'package:mentor_match_app/Mentor%20Package/MentorRegistration/mentorForm.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<Widget> pages = [
   EdDetails(),
@@ -146,6 +147,8 @@ class _MentorDetailsState extends State<MentorDetails> {
                                 _index += 1;
                               });
                             } else {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
                               print("Done");
                               setState(() {
                                 isDone = true;
@@ -187,10 +190,12 @@ class _MentorDetailsState extends State<MentorDetails> {
                                     FieldValue.arrayUnion(choicesSeleted),
                               }).catchError((e) {
                                 showAlertDialog(context, e.toString());
-                              }).then((value) => Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Login())));
+                              }).then((value) => {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Login()))
+                                  });
                             }
                           },
                           style: ElevatedButton.styleFrom(

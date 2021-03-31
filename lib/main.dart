@@ -18,7 +18,7 @@ Future main() async {
   await Firebase.initializeApp();
   final prefs = await SharedPreferences.getInstance();
   email = prefs.getString('mentormatch_email');
-  //acc = prefs.getString('mentorormatch');
+  acc = prefs.getString('Mentor/Mentee');
   seen = prefs.getBool('IntroSeen');
   seen == null
       ? print("Has not seen intropages")
@@ -44,7 +44,9 @@ class MentorMatch extends StatelessWidget {
       home: seen == null
           ? movingRocket()
           : (email != '')
-              ? NavBar()
+              ? NavBar(
+                  select: acc,
+                )
               : Login(),
       //)
     );

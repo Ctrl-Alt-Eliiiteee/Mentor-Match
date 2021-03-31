@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mentor_match_app/Login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenteeForm extends StatefulWidget {
   @override
@@ -154,6 +156,8 @@ class _MenteeFormState extends State<MenteeForm> {
                           !_email.contains('.com')) {
                         showAlertDialog(context, 'Invalid email');
                       } else {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
                         try {
                           await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
@@ -175,7 +179,12 @@ class _MenteeFormState extends State<MenteeForm> {
                           'State': _state,
                           'City': _city,
                           'Phone Number': _phoneNumber,
-                        });
+                        }).then((value) => {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Login()))
+                            });
                       }
                     },
                     style: ElevatedButton.styleFrom(
